@@ -28,7 +28,13 @@ const Navbar = () => {
                             {text}
                         </Link>
                     ))}
-                   {user && <button
+                    {
+                        user && <Link to='/approved-notes'
+                            className="text-sm text-gray-200 border border-gray-700 px-3 py-1 rounded-md hover:bg-gray-800 transition">
+                            Content
+                        </Link>
+                    }
+                    {user && <button
                         onClick={() => navigate('/admin')}
                         disabled={user?.role !== 'admin'}
                         title={user?.role !== 'admin' ? 'Admin access only' : 'Go to Admin Panel'}
