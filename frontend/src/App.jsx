@@ -29,7 +29,7 @@ function App() {
     <>
       {shouldShowNavbar && <Navbar />}
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/' element={user ? <Home />:<Login />} />
         <Route path='/login' element={user ? <Navigate to='/' /> : <Login />} />
         <Route path='/signup' element={user ? <Navigate to='/' /> : <Signup />} />
         <Route path='/admin' element={user?.role !== "admin" ? <Navigate to={'/'} /> : <Admin />} />
