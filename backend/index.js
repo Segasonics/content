@@ -15,7 +15,7 @@ const __dirname = path.dirname(__filename);
 
 //for cross origin resource sharing
 app.use(cors({
-    origin:'http://localhost:5173',
+    origin:'https://contank.netlify.app',
     credentials:true
 }));
 
