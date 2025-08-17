@@ -49,4 +49,19 @@ userSchema.methods.generateRefreshToken=function(){
         expiresIn:process.env.REFRESH_TOKEN_EXPIRY
     }
 )}
+
+// Verify Refresh Token
+userSchema.methods.verifyRefreshToken = function (incomingToken) {
+  try {
+    const decoded = jwt.verify(incomingToken, process.env.REFRESH_TOKEN_SECRET);
+
+    if (this.refreshToken !== incomingToken) {
+      return false; 
+    }
+
+    return decoded; 
+  } catch (err) {
+    return false; 
+  }
+};
 export const User = mongoose.model('User',userSchema)
