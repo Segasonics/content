@@ -7,6 +7,8 @@ const Navbar = () => {
     const user = useSelector((state) => state.auth.user);
     const navigate = useNavigate();
 
+    console.log("user",user)
+
     return (
         <header className="fixed top-0 w-full h-14 bg-black shadow-md z-50">
             <nav className="flex justify-between items-center h-full px-6">
@@ -47,6 +49,18 @@ const Navbar = () => {
                         <span>{user?.role !== 'admin' ? '🔒' : '🔓'}</span>
                         Admin
                     </button>}
+
+                    {
+                        user && 
+                        <div>
+                          <div>
+                            <img />
+                          </div>
+                          <div>
+                           <p> Welcome {user?.email}</p>
+                          </div>
+                        </div>
+                    }
 
                 </div>
             </nav>

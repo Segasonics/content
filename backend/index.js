@@ -14,10 +14,16 @@ const __dirname = path.dirname(__filename);
 
 
 //for cross origin resource sharing
-app.use(cors({
-    origin:'https://contank.netlify.app',
-    credentials:true
-}));
+app.use(
+  cors({
+    origin:
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:5173" // dev
+        : "https://contank.netlify.app", // prod
+    credentials: true,
+  })
+);
+
 
 const PORT = process.env.PORT || 8000;
 //allows server to understand json data sent from the client

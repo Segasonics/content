@@ -46,7 +46,7 @@ export const createUser = asyncHandler(async (req, res) => {
     const options = {
         httpOnly: true, //prevent XSS attacks-cross site scripting attack
         secure: true,
-        sameSite: 'strict'//prevents CSRF attacks, cross-site request forgery
+        sameSite: 'none'//prevents CSRF attacks, cross-site request forgery
     }
 
 
@@ -80,7 +80,7 @@ export const loginUser = asyncHandler(async(req,res)=>{
     const options = {
         httpOnly: true, //prevent XSS attacks-cross site scripting attack
         secure: true,
-        sameSite: 'strict'//prevents CSRF attacks, cross-site request forgery
+        sameSite: 'none'//prevents CSRF attacks, cross-site request forgery
     }
 
     return res.status(200)
@@ -108,7 +108,7 @@ export const logOutUser=asyncHandler(async(req,res)=>{
     const options={
         httpOnly:true,
         secure:true,
-         sameSite: 'None'
+         sameSite: 'none'
     }
 
     return res.status(200)
