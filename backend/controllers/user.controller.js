@@ -26,6 +26,8 @@ const generateAccessAndRefreshToken = async (userId) => {
         const accessToken = user.generateAccessToken();
         const refreshToken = user.generateRefreshToken();
 
+        user.refreshToken= refreshToken
+
         await user.save({ validateBeforeSave: false });
         return { refreshToken, accessToken }
     } catch (error) {
@@ -125,3 +127,26 @@ export const authUser = asyncHandler(async (req, res) => {
         .json(new ApiResponse(200, user, "authenticated"))
 })
 
+
+export const refreshAccessToken = asyncHandler(async (req, res) => {
+  const incoming = req.cookies?.refreshToken;
+  if (!incoming) throw new ApiError(401, "No refresh token");
+
+  // find user by stored refresh token
+  const user = await User.findOne({ refreshToken: incoming });
+  if (!user) throw new ApiError(403, "Invalid refresh token");
+
+  const ok = user.verifyRefreshToken(incoming);
+  if (!ok) throw new ApiError(403, "Expired or invalid refresh token");
+
+  // rotate tokens
+  const {accessToken,refreshToken}= generateAccessAndRefreshToken()
+
+  await user.save({ validateBeforeSave: false });
+
+  return res
+    .status(200)
+    .cookie("accessToken", accessToken, accessTokenOptions)
+    .cookie("refreshToken", refreshToken, refreshTokenOptions)
+    .json(new ApiResponse(200, {}, "Access token refreshed"));
+});

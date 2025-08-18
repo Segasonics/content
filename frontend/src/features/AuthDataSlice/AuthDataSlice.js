@@ -40,6 +40,18 @@ export const logout = createAsyncThunk(
   }
 )
 
+export const refresh = createAsyncThunk(
+  'auth/refresh',
+  async(_,{rejectWithValue})=>{
+    try {
+      const {data} = await axiosInstance.post('/users/refresh');
+      return data
+    } catch (error) {
+      return rejectWithValue(error.response.data)
+    }
+  }
+)
+
 export const authUser = createAsyncThunk(
   'auth/user',
   async (_, { rejectWithValue }) => {
@@ -57,12 +69,13 @@ const authDataSlice = createSlice({
   name: 'users',
   initialState: {
     user: null,
-    loading: true,
-    error: null
+    loading: false,
+    error: null,
+    accessToken:null
   },
   reducers: {
     logoutUser: (state) => {
-      state.user = null
+      state.accessToken =null;
     }
   },
   //each thunk has three states pending fulffiled and rjected
@@ -119,6 +132,18 @@ const authDataSlice = createSlice({
       .addCase(authUser.rejected, (state, action) => {
         state.loading = false;
         state.user = null;
+        state.error = action.payload;
+      })
+      //refresh
+      .addCase(refresh.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(refresh.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.accessToken = action.payload.data.accessToken; // your backend sends it
+      })
+      .addCase(refresh.rejected, (state, action) => {
+        state.status = "failed";
         state.error = action.payload;
       });
   },
