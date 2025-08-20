@@ -3,20 +3,15 @@ import dotenv from 'dotenv'
 import { connectDB } from './db/connectDB.js';
 import cookieParser from 'cookie-parser';
 import cors from 'cors'
-import path from 'path'
-import { fileURLToPath } from 'url';
 
 dotenv.config()
 const app = express();
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 
 //for cross origin resource sharing
 app.use(
   cors({
-    origin:
+    origin://"http://localhost:5173",
       process.env.NODE_ENV === "development"
         ? "http://localhost:5173" // dev
         : "https://contank.netlify.app", // prod
@@ -56,14 +51,6 @@ app.all('/api/{*splat}', (req, res) => {
   res.status(404).json({ message: 'API route not found' });
 });
 // Serve frontend in production
-
-if(process.env.NODE_ENV ==="production"){
-    app.use(express.static(path.join(__dirname,"../frontend/dist")));
-
-    app.get(/^\/(?!api).*/,(req,res)=>{
-        res.sendFile(path.join(__dirname,"../frontend","dist","index.html"))
-    })
-}
 
 app.listen(PORT,()=>{
     connectDB()

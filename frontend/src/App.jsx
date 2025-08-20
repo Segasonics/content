@@ -10,6 +10,7 @@ import { Toaster } from 'react-hot-toast'
 import Contents from './pages/Contents/Contents'
 import { useDispatch, useSelector } from 'react-redux'
 import { authUser } from './features/AuthDataSlice/AuthDataSlice'
+import ResetPassword from './pages/ResetPassword/ResetPassword'
 
 function App() {
   const { user, loading } = useSelector((state) => state.auth);
@@ -45,7 +46,7 @@ function App() {
             )
           }
         />
-
+      <Route path='/reset-password' element={user ? <ResetPassword /> : <Navigate to='/login' />} />
       </Routes>
       <Toaster />
     </>

@@ -64,18 +64,32 @@ export const authUser = createAsyncThunk(
     }
   }
 )
+export const resetPassword = createAsyncThunk(
+  'auth/reset-password',
+  async (form, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.post('/users/reset-password',form);
+      console.log(data.data)
+      return data
+    } catch (error) {
+      return rejectWithValue(error.response.data)
+    }
+  }
+)
+
+
 //slice to manage the state
 const authDataSlice = createSlice({
   name: 'users',
   initialState: {
     user: null,
-    loading: false,
+    loading: true,
     error: null,
     accessToken:null
   },
   reducers: {
     logoutUser: (state) => {
-      state.accessToken =null;
+      state.user = null
     }
   },
   //each thunk has three states pending fulffiled and rjected
@@ -134,7 +148,7 @@ const authDataSlice = createSlice({
         state.user = null;
         state.error = action.payload;
       })
-      //refresh
+      //refreshtoken
       .addCase(refresh.pending, (state) => {
         state.status = "loading";
       })

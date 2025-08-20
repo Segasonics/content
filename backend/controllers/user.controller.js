@@ -26,8 +26,6 @@ const generateAccessAndRefreshToken = async (userId) => {
         const accessToken = user.generateAccessToken();
         const refreshToken = user.generateRefreshToken();
 
-        user.refreshToken= refreshToken
-
         await user.save({ validateBeforeSave: false });
         return { refreshToken, accessToken }
     } catch (error) {
@@ -149,4 +147,28 @@ export const refreshAccessToken = asyncHandler(async (req, res) => {
     .cookie("accessToken", accessToken, accessTokenOptions)
     .cookie("refreshToken", refreshToken, refreshTokenOptions)
     .json(new ApiResponse(200, {}, "Access token refreshed"));
+});
+
+
+export const changePassword = asyncHandler(async (req, res) => {
+    const { oldPassword, newPassword } = req.body;
+    const userId = req.user._id;
+
+    const user = await User.findById(userId);
+    if (!user) {
+        throw new ApiError(400, "Unauthorized");
+    }
+
+    const isCorrectPassword = await user.isCorrectPassword(oldPassword);
+    if (!isCorrectPassword) {
+        throw new ApiError(401, "Old password is incorrect");
+    }
+
+    user.password = newPassword;  // will be hashed in pre("save") hook
+    await user.save();
+
+    return res.status(200).json({
+        success: true,
+        message: "Password changed successfully"
+    });
 });
