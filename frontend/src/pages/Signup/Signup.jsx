@@ -11,13 +11,14 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { BorderBeam } from "@/components/magicui/border-beam";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { signup } from "../../features/AuthDataSlice/AuthDataSlice";
 import toast from "react-hot-toast";
 
 //Signup page
 const Signup = () => {
+    const {loading}= useSelector((state)=>state.auth)
     const [formData, setFormData] = useState({
         email: "",
         password: ""
@@ -82,7 +83,9 @@ const Signup = () => {
                         </CardContent>
                         <CardFooter className="flex justify-between mt-2">
                             <Link type='submit' to={'/login'}>Login</Link>
-                            <Button className='cursor-pointer'>Signup</Button>
+                            <Button disabled={loading} className='cursor-pointer'>
+                                {loading ? 'Signing up...' :'Sign up'}
+                            </Button>
                         </CardFooter>
                     </form>
                     <BorderBeam duration={8} size={100} />

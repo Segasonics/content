@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { approveNote, deleteNote, fetchallNote, pendingNote, rejectNote } from "../../features/ContentDataSlice/ContentDataSlice";
-
+import { motion } from 'framer-motion'
 
 
 const Admin = () => {
@@ -22,13 +22,13 @@ const Admin = () => {
     dispatch(fetchallNote())//refresh notes 
     dispatch(pendingNote())// and pending notes on deletion
   }
-//function for approving the note
+  //function for approving the note
   const handleApprove = async (id) => {
     await dispatch(approveNote(id));
     dispatch(pendingNote()); // refresh list after approve
     dispatch(fetchallNote()); // reresh the approve notes
   };
-//function for rejecting the note
+  //function for rejecting the note
   const handleReject = async (id) => {
     await dispatch(rejectNote(id));
     dispatch(pendingNote()); // refresh list after reject
@@ -41,7 +41,14 @@ const Admin = () => {
       {/* Pending / Rejected */}
       <section className="max-w-2xl mx-auto">
         <h2 className="text-xl font-semibold mb-4">Pending / Rejected Content</h2>
-        <div className="grid gap-4">
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}    // smoothly move into place
+          transition={{
+            duration: 0.8,   // adjust speed
+            ease: "easeOut",
+          }}
+          className="grid gap-4">
           {pendingNotes?.length === 0 && (
             <p className="text-gray-500 text-center">No pending or rejected content.</p>
           )}
@@ -55,10 +62,10 @@ const Admin = () => {
                 <p className="text-sm text-gray-500">{item.content}</p>
                 <p
                   className={`text-sm mt-1 ${item.status === "approved"
-                      ? "text-green-600"
-                      : item.status === "rejected"
-                        ? "text-red-600"
-                        : "text-yellow-600"
+                    ? "text-green-600"
+                    : item.status === "rejected"
+                      ? "text-red-600"
+                      : "text-yellow-600"
                     }`}
                 >
                   Status: {item.status}
@@ -86,13 +93,20 @@ const Admin = () => {
               </div>
             </div>
           ))}
-        </div>
+        </motion.div>
       </section>
 
       {/* Approved Content */}
       <section className="max-w-2xl mx-auto mt-10">
         <h2 className="text-xl font-semibold mb-4">Approved Content</h2>
-        <div className="grid gap-4">
+        <motion.div
+          initial={{ y: 20, opacity: 0 }}   
+          animate={{ y: 0, opacity: 1 }}    // smoothly move into place
+          transition={{
+            duration: 0.8,  
+            ease: "easeOut",
+          }}
+          className="grid gap-4">
           {approvedNotes?.length === 0 && (
             <p className="text-gray-500 text-center">No approved content yet.</p>
           )}
@@ -114,7 +128,7 @@ const Admin = () => {
               </button>
             </div>
           ))}
-        </div>
+        </motion.div>
       </section>
     </div>
   );

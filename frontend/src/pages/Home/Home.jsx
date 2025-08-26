@@ -3,6 +3,7 @@ import { RetroGrid } from '../../components/magicui/retro-grid';
 import { useDispatch } from 'react-redux';
 import { createNote } from '../../features/ContentDataSlice/ContentDataSlice';
 import toast from 'react-hot-toast';
+import { motion } from 'framer-motion'
 
 const Home = () => {
   const [title, setTitle] = useState("");
@@ -39,7 +40,14 @@ const Home = () => {
       />
 
       {/*  form */}
-      <div className="relative z-10 flex items-center justify-center min-h-screen px-4">
+      <motion.div
+        initial={{ y: 20, opacity: 0 }}   
+        animate={{ y: 0, opacity: 1 }}    
+        transition={{
+          duration: 0.8,   
+          ease: "easeOut", 
+        }}
+        className="relative z-10 flex items-center justify-center min-h-screen px-4">
         <form
           onSubmit={handleSubmit}
           className="w-full max-w-xl bg-white p-6 rounded-lg shadow-md space-y-4"
@@ -79,7 +87,7 @@ const Home = () => {
             Submit
           </button>
         </form>
-      </div>
+      </motion.div>
     </div>
   );
 };

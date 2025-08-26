@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { resetPassword } from "../../features/AuthDataSlice/AuthDataSlice";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const ResetPassword = () => {
+  const {loading}= useSelector((state)=>state.auth)
   const [form, setForm] = useState({
     oldPassword: "",
     newPassword: "",
@@ -77,10 +78,11 @@ const ResetPassword = () => {
 
           {/* Submit Button */}
           <button
+            disabled={loading}
             type="submit"
             className="w-full bg-gray-950 text-white py-2 rounded-lg font-semibold hover:bg-gray-800 cursor-pointer transition"
           >
-            Reset Password
+           {loading ? 'Resetting...' : 'Resset Password'}
           </button>
         </form>
       </div>
