@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { approveNote, deleteNote, fetchallNote, pendingNote, rejectNote } from "../../features/ContentDataSlice/ContentDataSlice";
 import { motion } from 'framer-motion'
-import AdminPendingSkeleton from "../../components/skeletons/AdminPendingSkeleton";
-import AdminAllNotesSkeleton from "../../components/skeletons/AdminAllNotesSkeleton";
 import AdminPanelSkeleton from "../../components/skeletons/AdminPanelSkeleton";
 
 
