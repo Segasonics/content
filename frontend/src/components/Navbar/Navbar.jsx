@@ -114,97 +114,27 @@ const Navbar = () => {
     </div>
 
     {/* Mobile Hamburger */}
-{/* Mobile Hamburger */}
-<div className="md:hidden flex items-center">
-  <button
-    onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-    className="text-white focus:outline-none"
-  >
-    <svg
-      className="w-6 h-6"
-      fill="none"
-      stroke="currentColor"
-      viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth={2}
-        d={mobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
-      />
-    </svg>
-  </button>
-</div>
-
-{/* Mobile Menu */}
-{mobileMenuOpen && (
-  <div className="md:hidden bg-black border-t border-gray-700 w-full px-4 py-4 space-y-3 flex flex-col">
-    <Link
-      to="/content/group1"
-      className="px-3 py-2 text-gray-200 rounded-md hover:bg-gray-800 transition"
-      onClick={() => setMobileMenuOpen(false)}
-    >
-      Content 1
-    </Link>
-    <Link
-      to="/content/group2"
-      className="px-3 py-2 text-gray-200 rounded-md hover:bg-gray-800 transition"
-      onClick={() => setMobileMenuOpen(false)}
-    >
-      Content 2
-    </Link>
-    {!user &&
-      ["Login", "Signup"].map((text) => (
-        <Link
-          key={text}
-          to={`/${text.toLowerCase()}`}
-          className="px-3 py-2 text-gray-200 rounded-md hover:bg-gray-800 transition"
-          onClick={() => setMobileMenuOpen(false)}
+    <div className="md:hidden flex items-center">
+      <button
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        className="text-white focus:outline-none"
+      >
+        <svg
+          className="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
         >
-          {text}
-        </Link>
-      ))}
-    {user && (
-      <>
-        <button
-          onClick={() => {
-            navigate("/admin");
-            setMobileMenuOpen(false);
-          }}
-          disabled={user?.role !== "admin"}
-          className={`px-3 py-2 rounded-md flex items-center gap-1 transition
-            ${
-              user?.role === "admin"
-                ? "text-white hover:bg-gray-800 cursor-pointer"
-                : "text-gray-500 cursor-not-allowed"
-            }`}
-        >
-          Admin
-        </button>
-        <button
-          onClick={() => {
-            navigate("/reset-password");
-            setMobileMenuOpen(false);
-          }}
-          className="px-3 py-2 text-gray-200 rounded-md hover:bg-gray-800 transition"
-        >
-          Reset Password
-        </button>
-        <button
-          onClick={() => {
-            handleLogout();
-            setMobileMenuOpen(false);
-          }}
-          className="px-3 py-2 text-red-400 rounded-md hover:bg-gray-800 transition"
-        >
-          Logout ➙
-        </button>
-      </>
-    )}
-  </div>
-)}
-
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d={openDropdown ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+          />
+        </svg>
+      </button>
+    </div>
   </nav>
 
   {/* Mobile Menu */}
