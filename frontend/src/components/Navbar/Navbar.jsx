@@ -154,16 +154,14 @@ const Navbar = () => {
         Content 2
       </Link>
       {!user &&
-        ["Login", "Signup"].map((text) => (
           <Link
-            key={text}
-            to={`/${text.toLowerCase()}`}
+            to={`/login`}
             className="px-3 py-2 text-gray-200 rounded-md hover:bg-gray-800 transition"
             onClick={() => setMobileMenuOpen(false)}
           >
             {text}
           </Link>
-        ))}
+        }
       {user && (
         <>
           <button
