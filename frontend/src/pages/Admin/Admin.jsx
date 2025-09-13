@@ -4,6 +4,7 @@ import { approveNote, deleteNote, fetchallNote, pendingNote, rejectNote } from "
 import { motion } from 'framer-motion'
 import AdminPendingSkeleton from "../../components/skeletons/AdminPendingSkeleton";
 import AdminAllNotesSkeleton from "../../components/skeletons/AdminAllNotesSkeleton";
+import AdminPanelSkeleton from "../../components/skeletons/AdminPanelSkeleton";
 
 
 const Admin = () => {
@@ -36,11 +37,13 @@ const Admin = () => {
   };
 
   return (
+    <>
+    {loading ? <AdminPanelSkeleton /> :(
     <div className="min-h-screen bg-gray-100 p-8 pt-18">
       <h1 className="text-3xl font-bold text-center mb-6">Admin Panel</h1>
 
       {/* Pending / Rejected */}
-      {loading ? <AdminPendingSkeleton /> :(<section className="max-w-2xl mx-auto">
+      <section className="max-w-2xl mx-auto">
         <h2 className="text-xl font-semibold mb-4">Pending / Rejected Content</h2>
         <motion.div
           initial={{ y: 20, opacity: 0 }}
@@ -96,10 +99,10 @@ const Admin = () => {
             </div>
           ))}
         </motion.div>
-      </section>)}
+      </section>
 
       {/* Approved Content */}
-      {loading ?<AdminAllNotesSkeleton /> :(<section className="max-w-2xl mx-auto mt-10">
+      <section className="max-w-2xl mx-auto mt-10">
         <h2 className="text-xl font-semibold mb-4">Approved Content</h2>
         <motion.div
           initial={{ y: 20, opacity: 0 }}   
@@ -132,8 +135,10 @@ const Admin = () => {
             </div>
           ))}
         </motion.div>
-      </section>)}
+      </section>
     </div>
+    )}
+    </>
   );
 };
 
