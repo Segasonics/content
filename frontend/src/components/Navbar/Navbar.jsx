@@ -240,7 +240,7 @@ const Navbar = () => {
           <button
             onClick={() => {
               navigate("/admin");
-              setMobileMenuOpen(false);
+              setOpenDropdown(false);
             }}
             disabled={user?.role !== "admin"}
             className={`px-3 py-2 rounded-md flex items-center gap-1 transition
@@ -255,7 +255,7 @@ const Navbar = () => {
           <button
             onClick={() => {
               navigate("/reset-password");
-              setMobileMenuOpen(false);
+              setOpenDropdown(false);
             }}
             className="px-3 py-2 text-gray-200 rounded-md hover:bg-gray-800 transition"
           >
@@ -264,7 +264,7 @@ const Navbar = () => {
           <button
             onClick={() => {
               handleLogout();
-              setMobileMenuOpen(false);
+              setOpenDropdown(false);
             }}
             className="px-3 py-2 text-red-400 rounded-md hover:bg-gray-800 transition"
           >
