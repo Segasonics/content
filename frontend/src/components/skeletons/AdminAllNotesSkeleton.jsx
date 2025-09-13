@@ -14,7 +14,7 @@ const AdminAllNotesSkeleton = () => {
                         className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow flex flex-col sm:flex-row justify-between items-start sm:items-center animate-pulse"
                     >
                         {/* Left side (title + content + status) */}
-                        <div className="space-y-2 flex-1 w-full">
+                        <div className="space-y-2 flex-1 w-full sm:w-auto">
                             <div className="h-5 w-40 bg-gray-300 dark:bg-gray-700 rounded" />
                             <div className="h-3 w-full max-w-xs bg-gray-200 dark:bg-gray-600 rounded" />
                             <div className="h-3 w-32 bg-gray-200 dark:bg-gray-600 rounded" />
@@ -26,7 +26,6 @@ const AdminAllNotesSkeleton = () => {
                 ))}
             </div>
         </section>
-
     )
 }
 
