@@ -83,7 +83,6 @@ export function Login() {
             </div>
           </CardContent>
           <CardFooter className="flex justify-between mt-2">
-            <Link to={'/signup'} variant="outline cursor-pointer">Signup</Link>
             <Button disabled={loading} type='submit' className='cursor-pointer'>{loading ? 'Logging in...' :'Login'}</Button>
           </CardFooter>
         </form>
