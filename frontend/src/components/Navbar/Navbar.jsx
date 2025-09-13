@@ -57,7 +57,7 @@ const Navbar = () => {
             to={`/login`}
             className="px-3 py-1 text-sm text-gray-200 border border-gray-700 rounded-md hover:bg-gray-800 transition"
           >
-            {text}
+            Login
           </Link>
         }
 
@@ -159,7 +159,7 @@ const Navbar = () => {
             className="px-3 py-2 text-gray-200 rounded-md hover:bg-gray-800 transition"
             onClick={() => setMobileMenuOpen(false)}
           >
-            {text}
+            Login
           </Link>
         }
       {user && (
