@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import './App.css'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { Login } from './pages/Login/Login'
-import Signup from './pages/Signup/Signup'
 import Home from './pages/Home/Home'
 import Navbar from './components/Navbar/Navbar'
 import Admin from './pages/Admin/Admin'
@@ -36,7 +35,6 @@ function App() {
         <Route path='/group1/add' element={ <GroupOne />} />
         <Route path='/group2/add' element={ <GroupTwo />} />
         <Route path='/login' element={ <Login />} />
-        <Route path='/signup' element={<Signup />} />
         <Route path='/admin' element={user?.role !== "admin" ? <Navigate to={'/'} /> : <Admin />} />
         <Route
           path="/content/group1" element={<Contents />}

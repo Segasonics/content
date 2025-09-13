@@ -52,15 +52,14 @@ const Navbar = () => {
       </Link>
 
       {!user &&
-        ["Login", "Signup"].map((text, index) => (
+        
           <Link
-            key={index}
-            to={`/${text.toLowerCase()}`}
+            to={`/login`}
             className="px-3 py-1 text-sm text-gray-200 border border-gray-700 rounded-md hover:bg-gray-800 transition"
           >
             {text}
           </Link>
-        ))}
+        }
 
       {user && (
         <button
