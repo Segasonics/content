@@ -101,7 +101,10 @@ const Navbar = () => {
                 Reset Password
               </button>
               <button
-                onClick={handleLogout}
+                onClick={()=>{
+                  handleLogout();
+                  setOpenDropdown(false)
+                }}
                 className="w-full text-left text-sm text-red-400 hover:bg-gray-800 px-2 py-1 rounded"
               >
                 Logout ➙
