@@ -9,6 +9,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   const [openDropdown, setOpenDropdown] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const dropdownRef = useRef(null);
 
   // Close dropdown when clicking outside
@@ -115,7 +116,7 @@ const Navbar = () => {
     {/* Mobile Hamburger */}
     <div className="md:hidden flex items-center">
       <button
-        onClick={() => setOpenDropdown(!openDropdown)}
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         className="text-white focus:outline-none"
       >
         <svg
@@ -137,19 +138,19 @@ const Navbar = () => {
   </nav>
 
   {/* Mobile Menu */}
-  {openDropdown && (
+  {mobileMenuOpen && (
     <div className="md:hidden bg-black border-t border-gray-700 w-full px-4 py-4 space-y-3 flex flex-col">
       <Link
         to="/content/group1"
         className="px-3 py-2 text-gray-200 rounded-md hover:bg-gray-800 transition"
-        onClick={() => setOpenDropdown(false)}
+        onClick={() => mobileMenuOpen(false)}
       >
         Content 1
       </Link>
       <Link
         to="/content/group2"
         className="px-3 py-2 text-gray-200 rounded-md hover:bg-gray-800 transition"
-        onClick={() => setOpenDropdown(false)}
+        onClick={() => mobileMenuOpen(false)}
       >
         Content 2
       </Link>
@@ -159,7 +160,7 @@ const Navbar = () => {
             key={text}
             to={`/${text.toLowerCase()}`}
             className="px-3 py-2 text-gray-200 rounded-md hover:bg-gray-800 transition"
-            onClick={() => setOpenDropdown(false)}
+            onClick={() => mobileMenuOpen(false)}
           >
             {text}
           </Link>
