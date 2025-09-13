@@ -2,13 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { approveNote, deleteNote, fetchallNote, pendingNote, rejectNote } from "../../features/ContentDataSlice/ContentDataSlice";
 import { motion } from 'framer-motion'
+import AdminPendingSkeleton from "../../components/skeletons/AdminPendingSkeleton";
+import AdminAllNotesSkeleton from "../../components/skeletons/AdminAllNotesSkeleton";
 
 
 const Admin = () => {
-  const pendingNotes = useSelector((state) => state.content?.pendingContent);
-  const approvedNotes = useSelector((state) => state.content?.contents);
-  console.log(approvedNotes)
-  console.log(pendingNotes)
+  const {contents,pendingContent,loading} = useSelector((state) => state.content);
+  console.log(contents)
+  console.log(pendingContent)
   const dispatch = useDispatch();
   //fetch all pending and rejectedNotes on render
   useEffect(() => {
@@ -39,7 +40,7 @@ const Admin = () => {
       <h1 className="text-3xl font-bold text-center mb-6">Admin Panel</h1>
 
       {/* Pending / Rejected */}
-      <section className="max-w-2xl mx-auto">
+      {loading ? <AdminPendingSkeleton /> :(<section className="max-w-2xl mx-auto">
         <h2 className="text-xl font-semibold mb-4">Pending / Rejected Content</h2>
         <motion.div
           initial={{ y: 20, opacity: 0 }}
@@ -49,10 +50,10 @@ const Admin = () => {
             ease: "easeOut",
           }}
           className="grid gap-4">
-          {pendingNotes?.length === 0 && (
+          {pendingContent?.length === 0 && (
             <p className="text-gray-500 text-center">No pending or rejected content.</p>
           )}
-          {pendingNotes?.map((item) => (
+          {pendingContent?.map((item) => (
             <div
               key={item._id}
               className="bg-white p-4 rounded-lg shadow flex justify-between items-center"
@@ -76,9 +77,10 @@ const Admin = () => {
                   onClick={() => handleApprove(item._id)}
                   className="px-3 py-1 text-sm bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer"
                 >
-                  Approve
+                  {loading ? 'Approving...' :'Approve'}
                 </button>
                 <button
+                  disabled={loading}
                   onClick={() => handleReject(item._id)}
                   className="px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 cursor-pointer"
                 >
@@ -94,10 +96,10 @@ const Admin = () => {
             </div>
           ))}
         </motion.div>
-      </section>
+      </section>)}
 
       {/* Approved Content */}
-      <section className="max-w-2xl mx-auto mt-10">
+      {loading ?<AdminAllNotesSkeleton /> :(<section className="max-w-2xl mx-auto mt-10">
         <h2 className="text-xl font-semibold mb-4">Approved Content</h2>
         <motion.div
           initial={{ y: 20, opacity: 0 }}   
@@ -107,10 +109,10 @@ const Admin = () => {
             ease: "easeOut",
           }}
           className="grid gap-4">
-          {approvedNotes?.length === 0 && (
+          {contents?.length === 0 && (
             <p className="text-gray-500 text-center">No approved content yet.</p>
           )}
-          {approvedNotes?.map((item) => (
+          {contents?.map((item) => (
             <div
               key={item._id}
               className="bg-white p-4 rounded-lg shadow flex justify-between items-center"
@@ -121,15 +123,16 @@ const Admin = () => {
                 <p className="text-sm mt-1 text-green-600">Status: Approved</p>
               </div>
               <button
+                disabled={loading}
                 onClick={() => handleDelete(item._id)}
                 className="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600 cursor-pointer"
               >
-                Delete
+                {loading ? 'Deleting...':'Delete'}
               </button>
             </div>
           ))}
         </motion.div>
-      </section>
+      </section>)}
     </div>
   );
 };

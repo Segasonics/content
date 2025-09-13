@@ -14,9 +14,10 @@ export const noteSchema = new mongoose.Schema({
         enum:["pending","approved","rejected"],
         default:"pending"
     },
-    owner:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:"User"
+    group:{
+        type:String,
+        enum:["group1","group2"],
+        required:true,
     }
 },{
     timestamps:true

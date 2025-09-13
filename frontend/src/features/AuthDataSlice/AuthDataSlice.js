@@ -84,7 +84,7 @@ const authDataSlice = createSlice({
   name: 'users',
   initialState: {
     user: null,
-    loading: true,
+    loading: false,
     error: null,
     accessToken:null
   },

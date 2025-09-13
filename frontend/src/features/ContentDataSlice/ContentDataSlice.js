@@ -8,9 +8,22 @@ import { axiosInstance } from "../../lib/axiosInstance";
 
 export const createNote = createAsyncThunk(
   'note/create',
-  async ({ title, content }, { rejectWithValue }) => {
+  async ({ title, content,group }, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.post('/notes/createnote', { title, content });
+      const { data } = await axiosInstance.post('/notes/createnote', { title, content,group });
+      return data.data.content
+    } catch (error) {
+      return rejectWithValue(error.response.data)
+    }
+  }
+);
+
+export const fetchallNote = createAsyncThunk(
+  'note/fetchall',
+  async (_, { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.get(`/notes/fetchallnotes`);
+      console.log(data.data.content)
       return data.data.content
     } catch (error) {
       return rejectWithValue(error.response.data)
@@ -18,12 +31,13 @@ export const createNote = createAsyncThunk(
   }
 )
 
+
 //fetches all approved notes from the backend
-export const fetchallNote = createAsyncThunk(
-  'note/fetchall',
-  async (_, { rejectWithValue }) => {
+export const fetchallNoteByGroup = createAsyncThunk(
+  'note/fetchallByGroup',
+  async (group, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.get('/notes/fetchallnote');
+      const { data } = await axiosInstance.get(`/notes/fetchallnote/${group}`);
       console.log(data.data.content)
       return data.data.content
     } catch (error) {
@@ -108,10 +122,7 @@ const ContentDataSlice = createSlice({
       .addCase(createNote.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
-
-    // Fetch All Notes
-    builder
+      })
       .addCase(fetchallNote.pending, (state) => {
         state.loading = true;
         state.error = null;
@@ -124,16 +135,23 @@ const ContentDataSlice = createSlice({
       .addCase(fetchallNote.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
-
-    // Approve Note
-    builder
+      })
+      .addCase(fetchallNoteByGroup.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchallNoteByGroup.fulfilled, (state, action) => {
+        console.log(action.payload)
+        state.loading = false;
+        state.contents = action.payload;
+      })
+      .addCase(fetchallNoteByGroup.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
       .addCase(approveNote.fulfilled, (state, action) => {
         state.contents.push(action.payload)
-      });
-
-    // Pending Notes
-    builder
+      })
       .addCase(pendingNote.pending, (state) => {
         state.loading = true;
       })
@@ -144,10 +162,7 @@ const ContentDataSlice = createSlice({
       .addCase(pendingNote.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
-
-    // Delete Note
-    builder
+      })
       .addCase(deleteNote.fulfilled, (state, action) => {
         const deletedId = action.payload; 
         state.contents = state.contents.filter(note => note._id !== deletedId);

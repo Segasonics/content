@@ -4,20 +4,17 @@ import { ApiError } from '../utils/ApiError.js';
 import { Note } from '../models/note.model.js'
 //create note controller
 export const createNote = asyncHandler(async (req, res) => {
-    const { title, content } = req.body;
+    const { title, content,group } = req.body;
     //if one of the fields is empty it throws an error
     if ([title, content].some((field) => field.trim() === "")) {
         throw new ApiError(400, "All fields are required")
     }
-    //check if user is logged in
-    if (!req.user || !req.user._id) {
-        throw new ApiError(400, "Login or signup to submit a content")
-    }
+
     //creating the note 
     const newContent = await Note.create({
         title,
         content,
-        owner: req.user._id,
+        group
     });
 
     const findContent = await Note.findById(newContent._id);
@@ -44,12 +41,16 @@ export const deleteNote = asyncHandler(async (req, res) => {
         .json(new ApiResponse(201, {}, "Note deleted"))
 });
 //fetchall note controller
-export const fetchAllNotes = asyncHandler(async (req, res) => {
-    //find all note
-    const user = req.user;
-    if(!user){
-        throw new ApiError(400,"Unauthorised")
+export const fetchAllNotesByGroup = asyncHandler(async (req, res) => {
+    const {group}= req.params
+    const notes = await Note.find({group, status: "approved" });
+    // if no available note it throws an error
+    if (notes.length === 0) {
+        throw new ApiError(400, "No notes found!!... Start adding some")
     }
+    res.status(201).json(new ApiResponse(200, { content: notes }, "Notes fetched successfully"))
+})
+export const fetchAllNotes = asyncHandler(async (req, res) => {
     const notes = await Note.find({ status: "approved" });
     // if no available note it throws an error
     if (notes.length === 0) {

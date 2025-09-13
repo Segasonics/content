@@ -1,11 +1,12 @@
 import { Router } from "express";
-import { approveNote, createNote, deleteNote, fetchAllNotes, pendingNote, rejectNote } from "../controllers/note.controller.js";
+import { approveNote, createNote, deleteNote, fetchAllNotesByGroup, pendingNote, rejectNote,fetchAllNotes } from "../controllers/note.controller.js";
 import { protectedRoute } from "../middleware/protectedRoute.js";
 
 const router = Router();
 
-router.route('/createnote').post(protectedRoute,createNote);
-router.route('/fetchallnote').get(protectedRoute,fetchAllNotes);
+router.route('/createnote').post(createNote);
+router.route('/fetchallnote/:group').get(fetchAllNotesByGroup);
+router.route('/fetchallnotes').get(fetchAllNotes);
 router.route('/pending-notes').get(protectedRoute,pendingNote);
 router.route('/delete-note/:id').delete(protectedRoute,deleteNote);
 router.route('/approve/:id').put(protectedRoute,approveNote)

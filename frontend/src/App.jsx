@@ -11,6 +11,8 @@ import Contents from './pages/Contents/Contents'
 import { useDispatch, useSelector } from 'react-redux'
 import { authUser } from './features/AuthDataSlice/AuthDataSlice'
 import ResetPassword from './pages/ResetPassword/ResetPassword'
+import GroupOne from './pages/Group1/GroupOne'
+import GroupTwo from './pages/Group2/GroupTwo'
 
 function App() {
   const { user, loading } = useSelector((state) => state.auth);
@@ -18,7 +20,7 @@ function App() {
   const location = useLocation()
   console.log("Render check:", { user, loading });
 
-  const hideNavbar = ["/approved-notes"];
+  const hideNavbar = [`/content/group2`,'/content/group1'];
   useEffect(() => {
     dispatch(authUser())
   }, [dispatch])
@@ -30,21 +32,17 @@ function App() {
     <>
       {shouldShowNavbar && <Navbar />}
       <Routes>
-        <Route path='/' element={user ? <Home />:<Login />} />
-        <Route path='/login' element={user ? <Navigate to='/' /> : <Login />} />
-        <Route path='/signup' element={user ? <Navigate to='/' /> : <Signup />} />
+        <Route path='/' element={ <Home />} />
+        <Route path='/group1/add' element={ <GroupOne />} />
+        <Route path='/group2/add' element={ <GroupTwo />} />
+        <Route path='/login' element={ <Login />} />
+        <Route path='/signup' element={<Signup />} />
         <Route path='/admin' element={user?.role !== "admin" ? <Navigate to={'/'} /> : <Admin />} />
         <Route
-          path="/approved-notes"
-          element={
-            loading ? (
-              <div className="text-white text-center p-8">Loading...</div>
-            ) : user ? (
-              <Contents />
-            ) : (
-              <Navigate to="/login" />
-            )
-          }
+          path="/content/group1" element={<Contents />}
+        />
+        <Route
+          path="/content/group2" element={<Contents />}
         />
       <Route path='/reset-password' element={user ? <ResetPassword /> : <Navigate to='/login' />} />
       </Routes>

@@ -12,9 +12,9 @@ const app = express();
 app.use(
   cors({
     origin://"http://localhost:5173",
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:5173" // dev
-        : "https://contank.netlify.app", // prod
+       process.env.NODE_ENV === "development"
+         ? "http://localhost:5173" // dev
+         : "https://contank.netlify.app", // prod
     credentials: true,
   })
 );

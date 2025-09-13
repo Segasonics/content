@@ -42,6 +42,18 @@ const Navbar = () => {
 
         {/* Right - Nav Links */}
         <div className="flex gap-4 items-center">
+                      <Link
+              to="/content/group1"
+              className="text-sm text-gray-200 border border-gray-700 px-3 py-1 rounded-md hover:bg-gray-800 transition"
+            >
+              Content 1
+            </Link>
+            <Link
+              to="/content/group2"
+              className="text-sm text-gray-200 border border-gray-700 px-3 py-1 rounded-md hover:bg-gray-800 transition"
+            >
+              Content 2
+            </Link>
           {!user &&
             ["Login", "Signup"].map((text, index) => (
               <Link
@@ -52,15 +64,6 @@ const Navbar = () => {
                 {text}
               </Link>
             ))}
-
-          {user && (
-            <Link
-              to="/approved-notes"
-              className="text-sm text-gray-200 border border-gray-700 px-3 py-1 rounded-md hover:bg-gray-800 transition"
-            >
-              Content
-            </Link>
-          )}
 
           {user && (
             <button
