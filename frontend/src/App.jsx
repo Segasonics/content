@@ -12,6 +12,7 @@ import { authUser } from './features/AuthDataSlice/AuthDataSlice'
 import ResetPassword from './pages/ResetPassword/ResetPassword'
 import GroupOne from './pages/Group1/GroupOne'
 import GroupTwo from './pages/Group2/GroupTwo'
+import ContentTwo from './pages/Contents2/ContentTwo'
 
 function App() {
   const { user, loading } = useSelector((state) => state.auth);
@@ -40,7 +41,7 @@ function App() {
           path="/content/group1" element={<Contents />}
         />
         <Route
-          path="/content/group2" element={<Contents />}
+          path="/content/group2" element={<ContentTwo />}
         />
       <Route path='/reset-password' element={user ? <ResetPassword /> : <Navigate to='/login' />} />
       </Routes>

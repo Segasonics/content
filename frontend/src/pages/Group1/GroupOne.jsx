@@ -19,7 +19,7 @@ const GroupOne = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         //dispatching title and content
-        const result = await dispatch(createNote({ title, content,group }));
+        const result = await dispatch(createNote({ title, content, group }));
         console.log(result)
         setTitle("");
         setContent("")
@@ -33,18 +33,18 @@ const GroupOne = () => {
     };
 
     return (
-        <div className="relative min-h-screen overflow-hidden bg-gray-100 dark:bg-black">
+        <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#DCEFF5] via-white to-[#DCEFF5] dark:from-black dark:via-gray-900 dark:to-black">
             {/* Background grid */}
             <RetroGrid
                 className="z-0"
                 angle={60}
                 cellSize={40}
-                opacity={0.2}
-                lightLineColor="#a855f7"
-                darkLineColor="#9333ea"
+                opacity={0.12}
+                lightLineColor="#B22222"   
+                darkLineColor="#4A90E2"   
             />
 
-            {/*  form */}
+            {/* Form container */}
             <motion.div
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
@@ -52,15 +52,19 @@ const GroupOne = () => {
                     duration: 0.8,
                     ease: "easeOut",
                 }}
-                className="relative z-10 flex items-center justify-center min-h-screen px-4">
+                className="relative z-10 flex items-center justify-center min-h-screen px-4"
+            >
                 <form
                     onSubmit={handleSubmit}
-                    className="w-full max-w-xl bg-white p-6 rounded-lg shadow-md space-y-4"
+                    className="w-full max-w-xl bg-white/90 dark:bg-gray-900/90 backdrop-blur-md p-8 rounded-2xl shadow-xl space-y-6 border border-gray-200 dark:border-gray-700"
                 >
-                    <h2 className="text-2xl font-bold text-gray-800">Add a Note</h2>
+                    <h2 className="text-3xl font-extrabold text-center text-[#B22222] tracking-tight">
+                        Add a Note
+                    </h2>
 
+                    {/* Title input */}
                     <div>
-                        <label className="block mb-1 text-sm font-medium text-gray-700">
+                        <label className="block mb-1 text-sm font-medium text-[#4A90E2] dark:text-[#A3D977]">
                             Title
                         </label>
                         <input
@@ -68,32 +72,35 @@ const GroupOne = () => {
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
                             placeholder="Enter title"
-                            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-black-500"
+                            className="w-full border border-[#A3D977] rounded-lg p-3 bg-gray-50 dark:bg-gray-800 text-[#333333] dark:text-[#DCEFF5] focus:outline-none focus:ring-2 focus:ring-[#4A90E2] transition"
                         />
                     </div>
 
+                    {/* Content input */}
                     <div>
-                        <label className="block mb-1 text-sm font-medium text-gray-700">
+                        <label className="block mb-1 text-sm font-medium text-[#4A90E2] dark:text-[#A3D977]">
                             Content
                         </label>
                         <textarea
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
                             placeholder="Write your note here..."
-                            rows={4}
-                            className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-black-500"
+                            rows={5}
+                            className="w-full border border-[#A3D977] rounded-lg p-3 bg-gray-50 dark:bg-gray-800 text-[#333333] dark:text-[#DCEFF5] focus:outline-none focus:ring-2 focus:ring-[#4A90E2] transition"
                         />
                     </div>
 
+                    {/* Submit button */}
                     <button
                         type="submit"
-                        className="bg-black text-white px-4 py-2 rounded-lg hover:bg-gray-700 transition cursor-pointer"
+                        className=" cursor-pointer w-full bg-gradient-to-r from-[#B22222] to-[#C53030] text-[#DCEFF5] px-4 py-3 rounded-lg font-semibold hover:opacity-90 transition shadow-md hover:shadow-lg"
                     >
                         Submit
                     </button>
                 </form>
             </motion.div>
         </div>
+
     )
 }
 
