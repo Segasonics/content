@@ -66,13 +66,13 @@ const ContentTwo = () => {
 
                     <div className="relative z-10 max-w-6xl mx-auto px-6 lg:px-12">
                         <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif mb-10 text-[#C95B00] dark:text-[#FAD961] text-center tracking-wide">
-                            Scrolls of the Ancients
+                           Ibrahim
                         </h1>
 
                         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
                             {contents?.length === 0 && (
                                 <h1 className="text-lg md:text-xl lg:text-2xl text-[#824400] dark:text-[#FAD961] font-serif font-medium text-center">
-                                    No hieroglyphs found! Begin to carve them...
+                                    No content found! Begin to carve them...
                                 </h1>
                             )}
 
