@@ -50,7 +50,7 @@ const GroupTwo = () => {
                     className="w-full max-w-xl bg-[#FFF5E6]/80 dark:bg-gray-900/80 backdrop-blur-md p-8 rounded-2xl shadow-xl space-y-6 border border-[#C59B3E]"
                 >
                     <h2 className="text-3xl font-extrabold text-center text-[#966F2E] tracking-tight">
-                        Add a Note
+                        Ibrahim
                     </h2>
 
                     {/* Title input */}
@@ -84,7 +84,7 @@ const GroupTwo = () => {
                     {/* Submit button */}
                     <button
                         type="submit"
-                        className="w-full bg-gradient-to-r from-[#966F2E] to-[#C59B3E] text-[#FFF5E6] px-4 py-3 rounded-lg font-semibold hover:opacity-90 transition shadow-md hover:shadow-lg"
+                        className="cursor-pointer w-full bg-gradient-to-r from-[#966F2E] to-[#C59B3E] text-[#FFF5E6] px-4 py-3 rounded-lg font-semibold hover:opacity-90 transition shadow-md hover:shadow-lg"
                     >
                         Submit
                     </button>

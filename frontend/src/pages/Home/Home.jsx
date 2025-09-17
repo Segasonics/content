@@ -19,13 +19,6 @@ const Home = () => {
             className="flex flex-col items-center gap-4 bg-white shadow-md p-6 rounded-xl"
           >
             <h2 className="font-semibold text-lg">{section.name}</h2>
-
-            {/* QR Code for adding content */}
-            <QRCodeCanvas
-              value={`${window.location.origin}${section.qrPath}`}
-              size={200}
-            />
-
             {/* Link to view content */}
             <Link
               to={section.linkPath}

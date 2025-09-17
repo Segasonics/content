@@ -59,7 +59,7 @@ const GroupOne = () => {
                     className="w-full max-w-xl bg-white/90 dark:bg-gray-900/90 backdrop-blur-md p-8 rounded-2xl shadow-xl space-y-6 border border-gray-200 dark:border-gray-700"
                 >
                     <h2 className="text-3xl font-extrabold text-center text-[#B22222] tracking-tight">
-                        Add a Note
+                        Ayesha
                     </h2>
 
                     {/* Title input */}

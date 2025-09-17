@@ -48,13 +48,13 @@ const Admin = () => {
                 to="/group1/add"
                 className="px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-800 transition"
               >
-                + Group1
+                + Ayesha
               </Link>
               <Link
                 to="/group2/add"
                 className="px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-800 transition"
               >
-                + Group2
+                + Ibrahim
               </Link>
             </div>
 
@@ -67,14 +67,18 @@ const Admin = () => {
                 ease: "easeOut",
               }}
               className="grid gap-4">
-              {pendingContent?.length === 0 && (
-                <p className="text-gray-500 text-center">No pending or rejected content.</p>
-              )}
               {pendingContent?.map((item) => (
                 <div
                   key={item._id}
-                  className="bg-white p-4 rounded-lg shadow flex justify-between items-center"
+                  className="bg-white p-4 rounded-lg shadow flex justify-between items-center relative"
                 >
+                  {/* Watermark */}
+                  <span
+                    className="absolute top-2 right-2 text-lg font-bold text-green-600 opacity-20 select-none pointer-events-none"
+                  >
+                    {item.group === "group1" ? "Ayesha" : "Ibrahim"}
+                  </span>
+
                   <div>
                     <h3 className="text-lg font-semibold">{item.title}</h3>
                     <p className="text-sm text-gray-500">{item.content}</p>
@@ -89,6 +93,7 @@ const Admin = () => {
                       Status: {item.status}
                     </p>
                   </div>
+
                   <div className="flex gap-2">
                     <button
                       onClick={() => handleApprove(item._id)}
@@ -120,25 +125,24 @@ const Admin = () => {
             <h2 className="text-xl font-semibold mb-4">Approved Content</h2>
             <motion.div
               initial={{ y: 20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}    // smoothly move into place
-              transition={{
-                duration: 0.8,
-                ease: "easeOut",
-              }}
-              className="grid gap-4">
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+              className="grid gap-4"
+            >
               {contents?.length === 0 && (
                 <p className="text-gray-500 text-center">No approved content yet.</p>
               )}
               {contents?.map((item) => (
                 <div
                   key={item._id}
-                  className="bg-white p-4 rounded-lg shadow flex justify-between items-center"
+                  className="bg-white p-4 rounded-lg shadow flex justify-between items-center relative"
                 >
                   <div>
                     <h3 className="text-lg font-semibold">{item.title}</h3>
                     <p className="text-sm">{item.content}</p>
                     <p className="text-sm mt-1 text-green-600">Status: Approved</p>
                   </div>
+
                   <button
                     disabled={loading}
                     onClick={() => handleDelete(item._id)}
@@ -146,8 +150,17 @@ const Admin = () => {
                   >
                     {loading ? 'Deleting...' : 'Delete'}
                   </button>
+
+                  {/* Subtle watermark in bottom-right corner */}
+                  <span
+                    className={`absolute bottom-2 right-2 text-xs font-bold opacity-20 select-none pointer-events-none ${item.group === 'group1' ? 'text-green-600' : 'text-yellow-600'
+                      }`}
+                  >
+                    {item.group === 'group1' ? 'Ayesha' : 'Ibrahim'}
+                  </span>
                 </div>
               ))}
+
             </motion.div>
           </section>
         </div>

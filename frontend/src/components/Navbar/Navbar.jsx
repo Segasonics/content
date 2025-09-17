@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { logout } from "../../features/AuthDataSlice/AuthDataSlice";
+import userprofile from '../../assets/userprofile.jpg'
 
 const Navbar = () => {
   const user = useSelector((state) => state.auth.user);
@@ -81,7 +82,7 @@ const Navbar = () => {
       {user && (
         <div className="relative" ref={dropdownRef}>
           <img
-            src={user?.avatar || "https://i.pravatar.cc/40"}
+            src={userprofile}
             alt="user avatar"
             className="w-10 h-10 rounded-full border-2 border-gray-700 cursor-pointer"
             onClick={() => setOpenDropdown(!openDropdown)}
