@@ -20,7 +20,7 @@ function App() {
   const location = useLocation()
   console.log("Render check:", { user, loading });
 
-  const hideNavbar = [`/content/group2`,'/content/group1'];
+  const hideNavbar = [`/content/ibrahim`,'/content/ayesha'];
   useEffect(() => {
     dispatch(authUser())
   }, [dispatch])
