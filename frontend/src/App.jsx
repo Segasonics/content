@@ -33,15 +33,15 @@ function App() {
       {shouldShowNavbar && <Navbar />}
       <Routes>
         <Route path='/' element={ <Home />} />
-        <Route path='/group1/add' element={ <GroupOne />} />
-        <Route path='/group2/add' element={ <GroupTwo />} />
+        <Route path='/ayesha/add' element={ <GroupOne />} />
+        <Route path='/ibrahim/add' element={ <GroupTwo />} />
         <Route path='/login' element={ <Login />} />
         <Route path='/admin' element={user?.role !== "admin" ? <Navigate to={'/'} /> : <Admin />} />
         <Route
-          path="/content/group1" element={<Contents />}
+          path="/content/ayesha" element={<Contents />}
         />
         <Route
-          path="/content/group2" element={<ContentTwo />}
+          path="/content/ibrahim" element={<ContentTwo />}
         />
       <Route path='/reset-password' element={user ? <ResetPassword /> : <Navigate to='/login' />} />
       </Routes>
