@@ -20,7 +20,7 @@ function App() {
   const location = useLocation()
   console.log("Render check:", { user, loading });
 
-  const hideNavbar = [`/content/ibrahim`,'/content/ayesha'];
+  const hideNavbar = [`/content/group2`,'/content/group1'];
   useEffect(() => {
     dispatch(authUser())
   }, [dispatch])
@@ -33,15 +33,15 @@ function App() {
       {shouldShowNavbar && <Navbar />}
       <Routes>
         <Route path='/' element={ <Home />} />
-        <Route path='/ayesha/add' element={ <GroupOne />} />
-        <Route path='/ibrahim/add' element={ <GroupTwo />} />
+        <Route path='/group1/add' element={ <GroupOne />} />
+        <Route path='/group2/add' element={ <GroupTwo />} />
         <Route path='/login' element={ <Login />} />
         <Route path='/admin' element={user?.role !== "admin" ? <Navigate to={'/'} /> : <Admin />} />
         <Route
-          path="/content/ayesha" element={<Contents />}
+          path="/content/group1" element={<Contents />}
         />
         <Route
-          path="/content/ibrahim" element={<ContentTwo />}
+          path="/content/group2" element={<ContentTwo />}
         />
       <Route path='/reset-password' element={user ? <ResetPassword /> : <Navigate to='/login' />} />
       </Routes>

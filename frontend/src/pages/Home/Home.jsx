@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
   const sections = [
-    { name: "Ayesha", qrPath: "/ayesha/add", linkPath: "/content/ayesha" },
-    { name: "Ibrahim", qrPath: "/ibrahim/add", linkPath: "/content/ibrahim" },
+    { name: "Group1", qrPath: "/group1/add", linkPath: "/content/group1" },
+    { name: "Group2", qrPath: "/group2/add", linkPath: "/content/group2" },
   ];
 
   return (

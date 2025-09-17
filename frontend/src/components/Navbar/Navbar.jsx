@@ -39,13 +39,13 @@ const Navbar = () => {
     {/* Desktop Links */}
     <div className="hidden md:flex items-center gap-4">
       <Link
-        to="/content/ayesha"
+        to="/content/group1"
         className="px-3 py-1 text-sm text-gray-200 border border-gray-700 rounded-md hover:bg-gray-800 transition"
       >
         Content 1
       </Link>
       <Link
-        to="/content/ibrahim"
+        to="/content/group2"
         className="px-3 py-1 text-sm text-gray-200 border border-gray-700 rounded-md hover:bg-gray-800 transition"
       >
         Content 2
@@ -143,14 +143,14 @@ const Navbar = () => {
   {mobileMenuOpen && (
     <div className="md:hidden bg-black border-t border-gray-700 w-full px-4 py-4 space-y-3 flex flex-col">
       <Link
-        to="/content/ayesha"
+        to="/content/group1"
         className="px-3 py-2 text-gray-200 rounded-md hover:bg-gray-800 transition"
         onClick={() => setMobileMenuOpen(false)}
       >
         Content 1
       </Link>
       <Link
-        to="/content/ibrahim"
+        to="/content/group2"
         className="px-3 py-2 text-gray-200 rounded-md hover:bg-gray-800 transition"
         onClick={() => setMobileMenuOpen(false)}
       >
