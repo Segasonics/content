@@ -33,7 +33,7 @@ const GroupOne = () => {
     };
 
     return (
-        <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#DCEFF5] via-white to-[#DCEFF5] dark:from-black dark:via-gray-900 dark:to-black">
+        <div className="relative min-h-screen overflow-hidden bg-[#DCEFF5] dark:from-black dark:via-gray-900 dark:to-black">
             {/* Background grid */}
             <RetroGrid
                 className="z-0"
