@@ -2,7 +2,7 @@
 const NavbarSkeleton = () => {
   return (
     <header className="fixed top-0 w-full bg-black shadow-md z-50">
-      <nav className="max-w-7xl mx-auto flex justify-between items-center h-14 px-4 md:px-6">
+      <nav className="max-w-7xl mx-auto flex justify-end items-center h-14 px-4 md:px-6">
         {/* Desktop Skeleton */}
         <div className="hidden md:flex items-center gap-4">
           {/* Link placeholders */}
