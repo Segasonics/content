@@ -32,11 +32,6 @@ const Navbar = () => {
   return (
 <header className="fixed top-0 w-full bg-black shadow-md z-50">
   <nav className="max-w-7xl mx-auto flex justify-between items-center h-14 px-4 md:px-6">
-    {/* Logo */}
-    <Link to="/" className="text-xl font-bold text-white tracking-wide">
-      LOGO
-    </Link>
-
     {/* Desktop Links */}
     <div className="hidden md:flex items-center gap-4">
       <Link

@@ -13,6 +13,7 @@ import ResetPassword from './pages/ResetPassword/ResetPassword'
 import GroupOne from './pages/Group1/GroupOne'
 import GroupTwo from './pages/Group2/GroupTwo'
 import ContentTwo from './pages/Contents2/ContentTwo'
+import NavbarSkeleton from './components/skeletons/NavbarSkeleton'
 
 function App() {
   const { user, loading } = useSelector((state) => state.auth);
@@ -20,7 +21,7 @@ function App() {
   const location = useLocation()
   console.log("Render check:", { user, loading });
 
-  const hideNavbar = [`/content/group2`,'/content/group1'];
+  const hideNavbar = [`/content/group2`, '/content/group1'];
   useEffect(() => {
     dispatch(authUser())
   }, [dispatch])
@@ -30,11 +31,14 @@ function App() {
 
   return (
     <>
-      {shouldShowNavbar && <Navbar />}
+      {shouldShowNavbar && (
+        loading ? <NavbarSkeleton /> : <Navbar />
+      )}
+
       <Routes>
-        <Route path='/' element={ <Home />} />
-        <Route path='/group1/add' element={ <GroupOne />} />
-        <Route path='/group2/add' element={ <GroupTwo />} />
+        <Route path='/' element={<Home />} />
+        <Route path='/group1/add' element={<GroupOne />} />
+        <Route path='/group2/add' element={<GroupTwo />} />
         <Route path='/login' element={user ? <Navigate to="/" /> : <Login />} />
         <Route path='/admin' element={user?.role !== "admin" ? <Navigate to={'/'} /> : <Admin />} />
         <Route
@@ -43,7 +47,7 @@ function App() {
         <Route
           path="/content/group2" element={<ContentTwo />}
         />
-      <Route path='/reset-password' element={user ? <ResetPassword /> : <Navigate to='/login' />} />
+        <Route path='/reset-password' element={user ? <ResetPassword /> : <Navigate to='/login' />} />
       </Routes>
       <Toaster />
     </>
