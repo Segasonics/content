@@ -4,31 +4,32 @@ import { useDispatch } from 'react-redux';
 import { createNote } from '../../features/ContentDataSlice/ContentDataSlice';
 import toast from 'react-hot-toast';
 import { motion } from 'framer-motion'
+import { useLocation } from 'react-router-dom';
 
 const GroupTwo = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
+    const [submitted, setSubmitted] = useState(false); 
 
-    const group = location.pathname.split("/")[1] //extract group from url
-
+    const location = useLocation();
+    const group = location.pathname.split("/")[1]; //extract group from url
     const dispatch = useDispatch();
-    //form handle submit function
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        //dispatching title and content
         const result = await dispatch(createNote({ title, content, group }));
-        console.log(result)
+        console.log(result);
+
         setTitle("");
-        setContent("")
-        //if successfull display success toast
+        setContent("");
+
         if (createNote.fulfilled.match(result)) {
-            toast.success(result.payload.message || "Content created")
+            toast.success(result.payload.message || "Content created");
+            setSubmitted(true); // show success message
         } else {
-            //else diplay error toast
-            toast.error(result.payload.message || "Error while creating the note")
+            toast.error(result.payload.message || "Error while creating the note");
         }
     };
-
 
     return (
         <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#FAD961] via-[#F7971E] to-[#C95B00] dark:from-[#1E293B] dark:via-[#334155] dark:to-[#475569]">
@@ -38,61 +39,78 @@ const GroupTwo = () => {
                 style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/papyrus.png')" }}
             />
 
-            {/* Form container */}
             <motion.div
                 initial={{ y: 20, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
                 className="relative z-10 flex items-center justify-center min-h-screen px-4"
             >
-                <form
-                    onSubmit={handleSubmit}
-                    className="w-full max-w-xl bg-[#FFF5E6]/80 dark:bg-gray-900/80 backdrop-blur-md p-8 rounded-2xl shadow-xl space-y-6 border border-[#C59B3E]"
-                >
-                    <h2 className="text-3xl font-extrabold text-center text-[#966F2E] tracking-tight">
-                        Ibrahim
-                    </h2>
-
-                    {/* Title input */}
-                    <div>
-                        <label className="block mb-1 text-sm font-medium text-[#7A551E] dark:text-[#FAD961]">
-                            Title
-                        </label>
-                        <input
-                            type="text"
-                            value={title}
-                            onChange={(e) => setTitle(e.target.value)}
-                            placeholder="Enter title"
-                            className="w-full border border-[#D4B382] rounded-lg p-3 bg-[#FFF5E6] dark:bg-gray-800 text-[#333333] dark:text-[#FAD961] focus:outline-none focus:ring-2 focus:ring-[#966F2E] transition"
-                        />
-                    </div>
-
-                    {/* Content input */}
-                    <div>
-                        <label className="block mb-1 text-sm font-medium text-[#7A551E] dark:text-[#FAD961]">
-                            Content
-                        </label>
-                        <textarea
-                            value={content}
-                            onChange={(e) => setContent(e.target.value)}
-                            placeholder="Write your note here..."
-                            rows={5}
-                            className="w-full border border-[#D4B382] rounded-lg p-3 bg-[#FFF5E6] dark:bg-gray-800 text-[#333333] dark:text-[#FAD961] focus:outline-none focus:ring-2 focus:ring-[#966F2E] transition"
-                        />
-                    </div>
-
-                    {/* Submit button */}
-                    <button
-                        type="submit"
-                        className="cursor-pointer w-full bg-gradient-to-r from-[#966F2E] to-[#C59B3E] text-[#FFF5E6] px-4 py-3 rounded-lg font-semibold hover:opacity-90 transition shadow-md hover:shadow-lg"
+                {!submitted ? (
+                    <form
+                        onSubmit={handleSubmit}
+                        className="w-full max-w-xl bg-[#FFF5E6]/80 dark:bg-gray-900/80 backdrop-blur-md p-8 rounded-2xl shadow-xl space-y-6 border border-[#C59B3E]"
                     >
-                        Submit
-                    </button>
-                </form>
+                        <h2 className="text-3xl font-extrabold text-center text-[#966F2E] tracking-tight">
+                            Ibrahim
+                        </h2>
+
+                        <div>
+                            <label className="block mb-1 text-sm font-medium text-[#7A551E] dark:text-[#FAD961]">
+                                Title
+                            </label>
+                            <input
+                                type="text"
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                                placeholder="Enter title"
+                                className="w-full border border-[#D4B382] rounded-lg p-3 bg-[#FFF5E6] dark:bg-gray-800 text-[#333333] dark:text-[#FAD961] focus:outline-none focus:ring-2 focus:ring-[#966F2E] transition"
+                            />
+                        </div>
+
+                        <div>
+                            <label className="block mb-1 text-sm font-medium text-[#7A551E] dark:text-[#FAD961]">
+                                Content
+                            </label>
+                            <textarea
+                                value={content}
+                                onChange={(e) => setContent(e.target.value)}
+                                placeholder="Write your note here..."
+                                rows={5}
+                                className="w-full border border-[#D4B382] rounded-lg p-3 bg-[#FFF5E6] dark:bg-gray-800 text-[#333333] dark:text-[#FAD961] focus:outline-none focus:ring-2 focus:ring-[#966F2E] transition"
+                            />
+                        </div>
+
+                        <button
+                            type="submit"
+                            className="cursor-pointer w-full bg-gradient-to-r from-[#966F2E] to-[#C59B3E] text-[#FFF5E6] px-4 py-3 rounded-lg font-semibold hover:opacity-90 transition shadow-md hover:shadow-lg"
+                        >
+                            Submit
+                        </button>
+                    </form>
+                ) : (
+                    <motion.div
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        transition={{ duration: 0.5 }}
+                        className="w-full max-w-xl bg-[#FFF5E6]/80 dark:bg-gray-900/80 backdrop-blur-md p-8 rounded-2xl shadow-xl text-center border border-[#C59B3E]"
+                    >
+                        <h2 className="text-2xl font-bold text-[#7A551E] dark:text-[#FAD961]">
+                            Your content has been submitted successfully!
+                        </h2>
+                        <p className="mt-2 text-gray-600 dark:text-gray-300">
+                            It will be reviewed and approved soon.
+                        </p>
+                        <button
+                            onClick={() => setSubmitted(false)}
+                            className="cursor-pointer mt-6 bg-gradient-to-r from-[#966F2E] to-[#C59B3E] text-[#FFF5E6] px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition shadow-md hover:shadow-lg"
+                        >
+                            Add Another Note
+                        </button>
+                    </motion.div>
+                )}
             </motion.div>
         </div>
-
     )
 }
 
-export default GroupTwo
+export default GroupTwo;
