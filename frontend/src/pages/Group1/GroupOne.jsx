@@ -93,7 +93,7 @@ const GroupOne = () => {
                 ) : (
                     <div className="w-full max-w-xl bg-white/90 dark:bg-gray-900/90 backdrop-blur-md p-8 rounded-2xl shadow-xl text-center border border-gray-200 dark:border-gray-700">
                         <h2 className="text-2xl font-bold text-[#4A90E2] dark:text-[#A3D977]">
-                            Your content has been submitted successfully!
+                             Thank you for sending your message to <span className="text-[#FF6B6B]">Ayesha!</span>
                         </h2>
                         <p className="mt-2 text-gray-600 dark:text-gray-300">
                             It will be reviewed and approved soon.

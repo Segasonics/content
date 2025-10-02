@@ -9,7 +9,7 @@ import { useLocation } from 'react-router-dom';
 const GroupTwo = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [submitted, setSubmitted] = useState(false); 
+    const [submitted, setSubmitted] = useState(false);
 
     const location = useLocation();
     const group = location.pathname.split("/")[1]; //extract group from url
@@ -95,8 +95,10 @@ const GroupTwo = () => {
                         className="w-full max-w-xl bg-[#FFF5E6]/80 dark:bg-gray-900/80 backdrop-blur-md p-8 rounded-2xl shadow-xl text-center border border-[#C59B3E]"
                     >
                         <h2 className="text-2xl font-bold text-[#7A551E] dark:text-[#FAD961]">
-                            Your content has been submitted successfully!
+                            Thank you for sending your message to <span className="text-[#E63946]">Ibrahim!</span>
                         </h2>
+
+
                         <p className="mt-2 text-gray-600 dark:text-gray-300">
                             It will be reviewed and approved soon.
                         </p>
