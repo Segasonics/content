@@ -89,7 +89,7 @@ const GroupOne = () => {
                             disabled={loading}
                             type="submit"
                             className={`
-    relative flex items-center justify-center gap-2 w-full
+    relative flex items-center justify-center gap-2 w-full cursor-pointer
     bg-gradient-to-r from-[#EF4444] to-[#B91C1C]
     text-white px-4 py-3 rounded-xl font-semibold
     shadow-md transition-all duration-200

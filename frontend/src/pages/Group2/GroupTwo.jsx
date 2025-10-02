@@ -85,7 +85,7 @@ const GroupTwo = () => {
                             disabled={loading}
                             type="submit"
                             className={`
-    relative flex items-center justify-center gap-2 w-full
+    relative flex items-center justify-center gap-2 w-full cursor-pointer
     bg-gradient-to-r from-[#966F2E] to-[#C59B3E]
     text-[#FFF5E6] px-4 py-3 rounded-xl font-semibold
     shadow-md transition-all duration-200
