@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import { RetroGrid } from '../../components/magicui/retro-grid';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createNote } from '../../features/ContentDataSlice/ContentDataSlice';
 import toast from 'react-hot-toast';
 import { motion } from 'framer-motion'
 import { useLocation } from 'react-router-dom';
-
+import { Loader } from 'lucide-react'
 const GroupOne = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
-    const [submitted, setSubmitted] = useState(false); 
+    const [submitted, setSubmitted] = useState(false);
+
+    const {loading}= useSelector((state) => state.content);
 
     const location = useLocation();
     const group = location.pathname.split("/")[1]; //extract group from url
@@ -84,16 +86,32 @@ const GroupOne = () => {
                         </div>
 
                         <button
+                            disabled={loading}
                             type="submit"
-                            className="cursor-pointer w-full bg-gradient-to-r from-[#B22222] to-[#C53030] text-[#DCEFF5] px-4 py-3 rounded-lg font-semibold hover:opacity-90 transition shadow-md hover:shadow-lg"
+                            className={`
+    relative flex items-center justify-center gap-2 w-full
+    bg-gradient-to-r from-[#EF4444] to-[#B91C1C]
+    text-white px-4 py-3 rounded-xl font-semibold
+    shadow-md transition-all duration-200
+    hover:scale-[1.02] hover:shadow-lg hover:opacity-95
+    disabled:opacity-60 disabled:cursor-not-allowed
+  `}
                         >
-                            Submit
+                            {loading ? (
+                                <>
+                                    <Loader className="h-5 w-5 animate-spin" aria-hidden="true" />
+                                    <span>Submitting...</span>
+                                </>
+                            ) : (
+                                <span>Submit</span>
+                            )}
                         </button>
+
                     </form>
                 ) : (
                     <div className="w-full max-w-xl bg-white/90 dark:bg-gray-900/90 backdrop-blur-md p-8 rounded-2xl shadow-xl text-center border border-gray-200 dark:border-gray-700">
                         <h2 className="text-2xl font-bold text-[#4A90E2] dark:text-[#A3D977]">
-                             Thank you for sending your message to <span className="text-[#FF6B6B]">Ayesha!</span>
+                            Thank you for sending your message to <span className="text-[#FF6B6B]">Ayesha!</span>
                         </h2>
                         <p className="mt-2 text-gray-600 dark:text-gray-300">
                             It will be reviewed and approved soon.
