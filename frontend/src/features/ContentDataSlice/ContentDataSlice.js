@@ -94,6 +94,18 @@ export const rejectNote = createAsyncThunk(
   }
 );
 
+//generate a note
+export const generateContent = createAsyncThunk(
+  "note/generate",
+  async ( {title} , { rejectWithValue }) => {
+    try {
+      const { data } = await axiosInstance.post("/notes/generate",  {title} );
+      return data.data.content;
+    } catch (error) {
+      return rejectWithValue(error.response?.data || { message: "Something went wrong" });
+    }
+  }
+)
 // ------------------------ Slice ------------------------ //
 
 const ContentDataSlice = createSlice({
@@ -102,6 +114,7 @@ const ContentDataSlice = createSlice({
     contents: [],
     pendingContent: [],
     loading: false,
+    isNoteGenerating: false,
     error: null,
   },
   reducers: {},
@@ -181,7 +194,20 @@ const ContentDataSlice = createSlice({
       .addCase(rejectNote.fulfilled, (state, action) => {
         state.contents = state.contents.filter((note) => note._id !== action.payload._id);
         state.pendingContent = state.pendingContent.filter((note) => note._id !== action.payload._id);
-      });
+      })
+      //generate Note
+      .addCase(generateContent.pending, (state) => {
+        state.isNoteGenerating = true;
+        state.error = null;
+      })
+      .addCase(generateContent.fulfilled, (state, action) => {
+        state.isNoteGenerating = false;
+        state.pendingContent.push(action.payload);
+      })
+      .addCase(generateContent.rejected, (state, action) => {
+        state.isNoteGenerating = false;
+        state.error = action.payload?.message || "Failed to generate note";
+      })
   },
 });
 

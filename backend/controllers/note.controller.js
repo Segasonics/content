@@ -1,7 +1,8 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from '../utils/ApiError.js';
-import { Note } from '../models/note.model.js'
+import { Note } from '../models/note.model.js';
+import { generateResponse } from "../utils/llm/llm.js";
 //create note controller
 export const createNote = asyncHandler(async (req, res) => {
     const { title, content,group } = req.body;
@@ -100,4 +101,13 @@ export const rejectNote = asyncHandler(async (req, res) => {
 
     res.status(200).json(new ApiResponse(200, { content: note }, "Note approved"))
 
+})
+
+export const generateContent = asyncHandler(async (req, res) => {
+    const { title } = req.body;
+    if(!title){
+        throw new ApiError(400, "Title is required")
+    }
+    const generatedContent = await generateResponse(title);
+    res.status(200).json(new ApiResponse(200, {title, content: generatedContent }, "Content generated successfully"))
 })
