@@ -26,12 +26,6 @@ function App() {
     if (user) {
       dispatch(setUser(JSON.parse(user)));
     }
-
-    const timer = setTimeout(() => {
-      dispatch(authUser());
-    }, 3000);
-
-    return () => clearTimeout(timer);
   }, [dispatch]);
   console.log(user);
   //hide navbaron specific routes
