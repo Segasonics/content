@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { logout } from "../../features/AuthDataSlice/AuthDataSlice";
-import userprofile from '../../assets/userprofile.jpg'
+import { logoutUser } from "../../features/AuthDataSlice/AuthDataSlice";
+import userprofile from "../../assets/userprofile.jpg";
 
 const Navbar = () => {
   const user = useSelector((state) => state.auth.user);
@@ -25,9 +25,9 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    dispatch(logout())
-    navigate('/login')
-  }
+    dispatch(logoutUser());
+    navigate("/login");
+  };
 
   return (
     <header className="fixed top-0 w-full bg-black shadow-md z-50">
@@ -47,26 +47,30 @@ const Navbar = () => {
             Content 2
           </Link>
 
-          {!user &&
-
+          {!user && (
             <Link
               to={`/login`}
               className="px-3 py-1 text-sm text-gray-200 border border-gray-700 rounded-md hover:bg-gray-800 transition"
             >
               Login
             </Link>
-          }
+          )}
 
           {user && (
             <button
               onClick={() => navigate("/admin")}
               disabled={user?.role !== "admin"}
-              title={user?.role !== "admin" ? "Admin access only" : "Go to Admin Panel"}
+              title={
+                user?.role !== "admin"
+                  ? "Admin access only"
+                  : "Go to Admin Panel"
+              }
               className={`px-3 py-1 text-sm rounded-md border flex items-center gap-1 transition
-            ${user?.role === "admin"
-                  ? "text-white border-gray-700 hover:bg-gray-800 cursor-pointer"
-                  : "text-gray-500 border-gray-600 cursor-not-allowed"
-                }`}
+            ${
+              user?.role === "admin"
+                ? "text-white border-gray-700 hover:bg-gray-800 cursor-pointer"
+                : "text-gray-500 border-gray-600 cursor-not-allowed"
+            }`}
             >
               <span>{user?.role !== "admin" ? "🔒" : "🔓"}</span> Admin
             </button>
@@ -98,7 +102,7 @@ const Navbar = () => {
                   <button
                     onClick={() => {
                       handleLogout();
-                      setOpenDropdown(false)
+                      setOpenDropdown(false);
                     }}
                     className="w-full text-left text-sm text-red-400 hover:bg-gray-800 px-2 py-1 rounded"
                   >
@@ -127,7 +131,11 @@ const Navbar = () => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d={openDropdown ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+                d={
+                  openDropdown
+                    ? "M6 18L18 6M6 6l12 12"
+                    : "M4 6h16M4 12h16M4 18h16"
+                }
               />
             </svg>
           </button>
@@ -151,7 +159,7 @@ const Navbar = () => {
           >
             Content 2
           </Link>
-          {!user &&
+          {!user && (
             <Link
               to={`/login`}
               className="px-3 py-2 text-gray-200 rounded-md hover:bg-gray-800 transition"
@@ -159,7 +167,7 @@ const Navbar = () => {
             >
               Login
             </Link>
-          }
+          )}
           {user && (
             <>
               <button
@@ -169,10 +177,11 @@ const Navbar = () => {
                 }}
                 disabled={user?.role !== "admin"}
                 className={`px-3 py-2 rounded-md flex items-center gap-1 transition
-              ${user?.role === "admin"
-                    ? "text-white hover:bg-gray-800 cursor-pointer"
-                    : "text-gray-500 cursor-not-allowed"
-                  }`}
+              ${
+                user?.role === "admin"
+                  ? "text-white hover:bg-gray-800 cursor-pointer"
+                  : "text-gray-500 cursor-not-allowed"
+              }`}
               >
                 Admin
               </button>
@@ -199,7 +208,6 @@ const Navbar = () => {
         </div>
       )}
     </header>
-
   );
 };
 
