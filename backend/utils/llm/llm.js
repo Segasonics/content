@@ -26,5 +26,4 @@ async function generateResponse(title) {
 }
 
 const title ="My first note";
-generateResponse(title);
 export { generateResponse };

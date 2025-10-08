@@ -10,11 +10,10 @@ import { motion } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import { Loader, Sparkles } from "lucide-react";
 const GroupOne = () => {
-  const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
-  const { loading, isNoteGenerating } = useSelector((state) => state.content);
+  const { loading } = useSelector((state) => state.content);
 
   const location = useLocation();
   const group = location.pathname.split("/")[1]; //extract group from url
@@ -22,10 +21,9 @@ const GroupOne = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = await dispatch(createNote({ title, content, group }));
+    const result = await dispatch(createNote({ content, group }));
     console.log(result);
 
-    setTitle("");
     setContent("");
 
     if (createNote.fulfilled.match(result)) {
@@ -53,6 +51,17 @@ const GroupOne = () => {
     }
   };
 
+  const handleChange = (e) => {
+    const text = e.target.value;
+
+    // Capitalize first letter of the text and after each period
+    const formattedText = text.replace(/(^\s*\w|[.!?]\s*\w)/g, (c) =>
+      c.toUpperCase()
+    );
+
+    setContent(formattedText);
+  };
+
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#DCEFF5] dark:from-black dark:via-gray-900 dark:to-black">
       <RetroGrid
@@ -78,45 +87,21 @@ const GroupOne = () => {
             <h2 className="text-3xl font-extrabold text-center text-[#B22222] tracking-tight">
               Ayesha
             </h2>
-
             <div>
-              <label className="block mb-1 text-sm font-medium text-[#4A90E2] dark:text-[#A3D977]">
-                Title
-              </label>
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Enter title"
-                className="w-full border border-[#A3D977] rounded-lg p-3 bg-gray-50 dark:bg-gray-800 text-[#333333] dark:text-[#DCEFF5] focus:outline-none focus:ring-2 focus:ring-[#4A90E2] transition"
-              />
-            </div>
-
-            <div>
-              <label className="block mb-1 text-sm font-medium text-[#4A90E2] dark:text-[#A3D977]">
+              <label className="block mb-1 text-lg font-medium text-[#4A90E2] dark:text-[#A3D977]">
                 Content
               </label>
               <textarea
                 value={content}
-                onChange={(e) => setContent(e.target.value)}
+                onChange={handleChange}
                 placeholder="Write your note here..."
                 rows={5}
                 className="w-full border border-[#A3D977] rounded-lg p-3 bg-gray-50 dark:bg-gray-800 text-[#333333] dark:text-[#DCEFF5] focus:outline-none focus:ring-2 focus:ring-[#4A90E2] transition"
               />
-              <div className="absolute hover:scale-110 top-58 right-12 -translate-y-1/2 text-[#A3D977] dark:text-[#A3D977] cursor-pointer ">
-                {isNoteGenerating ? (
-                  <Loader className="h-5 w-5 animate-spin" aria-hidden="true" />
-                ) : (
-                  <Sparkles
-                    className="w-5 h-5 drop-shadow-[0_0_6px_#FAD961]"
-                    onClick={handleNoteGeneration}
-                  />
-                )}
-              </div>
             </div>
 
             <button
-              disabled={loading || isNoteGenerating}
+              disabled={loading}
               type="submit"
               className={`
     relative flex items-center justify-center gap-2 w-full cursor-pointer
@@ -140,12 +125,8 @@ const GroupOne = () => {
         ) : (
           <div className="w-full max-w-xl bg-white/90 dark:bg-gray-900/90 backdrop-blur-md p-8 rounded-2xl shadow-xl text-center border border-gray-200 dark:border-gray-700">
             <h2 className="text-2xl font-bold text-[#4A90E2] dark:text-[#A3D977]">
-              Thank you for sending your message to{" "}
-              <span className="text-[#FF6B6B]">Ayesha!</span>
+              Content has been submitted successfully and will be appearing soon
             </h2>
-            <p className="mt-2 text-gray-600 dark:text-gray-300">
-              It will be reviewed and approved soon.
-            </p>
             <button
               onClick={() => setSubmitted(false)}
               className="cursor-pointer mt-6 bg-gradient-to-r from-[#B22222] to-[#C53030] text-[#DCEFF5] px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition shadow-md hover:shadow-lg"

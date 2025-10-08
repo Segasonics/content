@@ -1,19 +1,19 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchallNoteByGroup } from '../../features/ContentDataSlice/ContentDataSlice';
-import { motion, useAnimation } from 'motion/react'
-import { useLocation } from 'react-router-dom';
-import ContentSkeleton from '../../components/skeletons/ContentSkeleton';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchallNoteByGroup } from "../../features/ContentDataSlice/ContentDataSlice";
+import { motion, useAnimation } from "motion/react";
+import { useLocation } from "react-router-dom";
+import ContentSkeleton from "../../components/skeletons/ContentSkeleton";
 
 const Contents = () => {
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   //getting the contents from the store
   const { contents, loading } = useSelector((state) => state.content);
   const location = useLocation();
-  const group = location.pathname.split('/')[2];
+  const group = location.pathname.split("/")[2];
   useEffect(() => {
     //dispatching fetchallnote to get all approved content
-    dispatch(fetchallNoteByGroup(group))
+    dispatch(fetchallNoteByGroup(group));
   }, [dispatch, group]);
 
   const controls = useAnimation();
@@ -49,7 +49,6 @@ const Contents = () => {
     };
   }, [controls, contents]);
 
-
   return (
     <>
       {loading ? (
@@ -64,7 +63,7 @@ const Contents = () => {
           />
 
           {/* Leaf */}
-          <motion.div
+          {/* <motion.div
             initial={{ opacity: 0, x: -30, y: -30 }}
             animate={{ opacity: 1, x: 0, y: 0 }}
             transition={{ duration: 1.2 }}
@@ -75,10 +74,10 @@ const Contents = () => {
               alt="leaf branch"
               className="w-full h-full object-contain"
             />
-          </motion.div>
+          </motion.div> */}
 
           {/* cheery */}
-          <div className="fixed bottom-6 right-6 w-44 h-44 -z-10">
+          {/* <div className="fixed bottom-6 right-6 w-44 h-44 -z-10">
             {[
               { size: "text-5xl", top: "10%", left: "20%", delay: 0 },
               { size: "text-4xl", top: "40%", left: "60%", delay: 0.5 },
@@ -101,7 +100,7 @@ const Contents = () => {
                 🌸
               </motion.div>
             ))}
-          </div>
+          </div> */}
           <div className="relative z-10 max-w-[80%] mx-auto px-6 lg:px-12 overflow-hidden">
             <h1
               className="sticky top-0
@@ -122,7 +121,10 @@ const Contents = () => {
                 No content !! Start adding some
               </h1>
             ) : (
-              <motion.div animate={controls} className="flex flex-col gap-8 relative">
+              <motion.div
+                animate={controls}
+                className="flex flex-col gap-8 relative"
+              >
                 {contents.concat(contents).map((note, index) => {
                   const isLeft = index % 2 === 0;
                   return (
@@ -138,22 +140,20 @@ const Contents = () => {
           relative overflow-hidden`}
                       style={{
                         boxShadow: "0 10px 25px rgba(0,0,0,0.15)",
-                        backgroundImage: "linear-gradient(to bottom, #FFFDF5 0%, #FFF7E6 100%)",
+                        backgroundImage:
+                          "linear-gradient(to bottom, #FFFDF5 0%, #FFF7E6 100%)",
                       }}
                     >
                       {/* Top decorative line */}
                       <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#C59B3E] to-[#FFD580] rounded-t-xl" />
 
-                      {/* Vine decorations */}
+                      {/* Vine decorations
                       <div className="absolute top-0 left-0 w-6 h-6 -translate-x-2 -translate-y-2">🍃</div>
                       <div className="absolute top-0 right-0 w-6 h-6 translate-x-2 -translate-y-2">🍃</div>
                       <div className="absolute bottom-0 left-0 w-6 h-6 -translate-x-2 translate-y-2">🍃</div>
-                      <div className="absolute bottom-0 right-0 w-6 h-6 translate-x-2 translate-y-2">🍃</div>
+                      <div className="absolute bottom-0 right-0 w-6 h-6 translate-x-2 translate-y-2">🍃</div> */}
 
-                      <h2 className="text-xl md:text-2xl lg:text-3xl font-semibold mb-3 text-[#3B3B3B] dark:text-[#DCE775]">
-                        {note?.title}
-                      </h2>
-                      <p className="text-base md:text-lg lg:text-xl text-[#4A4A4A] dark:text-[#E0E0C3] leading-relaxed whitespace-pre-line">
+                      <p className="text-xl md:text-2xl lg:text-3xl font-semibold mb-3 text-[#2C3E50] dark:text-[#A3D977]">
                         {note?.content}
                       </p>
                     </div>
@@ -165,7 +165,7 @@ const Contents = () => {
         </div>
       )}
     </>
-  )
-}
+  );
+};
 
-export default Contents
+export default Contents;

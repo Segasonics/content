@@ -1,10 +1,6 @@
 import mongoose from "mongoose";
 //note model
 export const noteSchema = new mongoose.Schema({
-    title:{
-        type:String,
-        required:true,
-    },
     content:{
         type:String,
         required:true

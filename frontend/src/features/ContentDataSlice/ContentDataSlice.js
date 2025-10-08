@@ -6,9 +6,9 @@ import { axiosInstance } from "../../lib/axiosInstance";
 // Create a new note
 export const createNote = createAsyncThunk(
   "note/create",
-  async ({ title, content, group }, { rejectWithValue }) => {
+  async ({ content, group }, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.post("/notes/createnote", { title, content, group });
+      const { data } = await axiosInstance.post("/notes/createnote", { content, group });
       return data.data.content;
     } catch (error) {
       return rejectWithValue(error.response?.data || { message: "Something went wrong" });
@@ -115,6 +115,7 @@ const ContentDataSlice = createSlice({
     pendingContent: [],
     loading: false,
     isNoteGenerating: false,
+    isDeleting: false,
     error: null,
   },
   reducers: {},
@@ -184,12 +185,20 @@ const ContentDataSlice = createSlice({
       })
 
       // Delete note
+      .addCase(deleteNote.pending, (state) => {
+        state.isDeleting = true;
+        state.error = null;
+      })
       .addCase(deleteNote.fulfilled, (state, action) => {
+        state.isDeleting = false;
         const id = action.payload;
         state.contents = state.contents.filter((note) => note._id !== id);
         state.pendingContent = state.pendingContent.filter((note) => note._id !== id);
       })
-
+      .addCase(deleteNote.rejected, (state, action) => {
+        state.isDeleting = false;
+        state.error = action.payload?.message || "Failed to delete note";
+      })
       // Reject note
       .addCase(rejectNote.fulfilled, (state, action) => {
         state.contents = state.contents.filter((note) => note._id !== action.payload._id);

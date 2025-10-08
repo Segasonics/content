@@ -5,15 +5,13 @@ import { Note } from '../models/note.model.js';
 import { generateResponse } from "../utils/llm/llm.js";
 //create note controller
 export const createNote = asyncHandler(async (req, res) => {
-    const { title, content,group } = req.body;
+    const {  content,group } = req.body;
     //if one of the fields is empty it throws an error
-    if ([title, content].some((field) => field.trim() === "")) {
+    if(!content){
         throw new ApiError(400, "All fields are required")
     }
-
     //creating the note 
     const newContent = await Note.create({
-        title,
         content,
         group
     });

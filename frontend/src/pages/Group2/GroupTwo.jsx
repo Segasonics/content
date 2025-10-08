@@ -12,20 +12,18 @@ import { useLocation } from "react-router-dom";
 import { Loader } from "lucide-react";
 
 const GroupTwo = () => {
-  const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const { loading, isNoteGenerating } = useSelector((state) => state.content);
+  const { loading } = useSelector((state) => state.content);
   const location = useLocation();
   const group = location.pathname.split("/")[1]; //extract group from url
   const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const result = await dispatch(createNote({ title, content, group }));
+    const result = await dispatch(createNote({ content, group }));
     console.log(result);
 
-    setTitle("");
     setContent("");
 
     if (createNote.fulfilled.match(result)) {
@@ -51,6 +49,17 @@ const GroupTwo = () => {
       console.log(error);
       toast.error("Failed to generate note");
     }
+  };
+
+  const handleChange = (e) => {
+    const text = e.target.value;
+
+    // Capitalize first letter of the text and after each period
+    const formattedText = text.replace(/(^\s*\w|[.!?]\s*\w)/g, (c) =>
+      c.toUpperCase()
+    );
+
+    setContent(formattedText);
   };
 
   return (
@@ -80,43 +89,20 @@ const GroupTwo = () => {
             </h2>
 
             <div>
-              <label className="block mb-1 text-sm font-medium text-[#7A551E] dark:text-[#FAD961]">
-                Title
-              </label>
-              <input
-                type="text"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Enter title"
-                className="w-full border border-[#D4B382] rounded-lg p-3 bg-[#FFF5E6] dark:bg-gray-800 text-[#333333] dark:text-[#FAD961] focus:outline-none focus:ring-2 focus:ring-[#966F2E] transition"
-              />
-            </div>
-
-            <div>
-              <label className="block mb-1 text-sm font-medium text-[#7A551E] dark:text-[#FAD961]">
+              <label className="block mb-1 text-lg font-medium text-[#7A551E] dark:text-[#FAD961]">
                 Content
               </label>
               <textarea
                 value={content}
-                onChange={(e) => setContent(e.target.value)}
+                onChange={handleChange}
                 placeholder="Write your note here..."
                 rows={5}
                 className="w-full border border-[#D4B382] rounded-lg p-3 bg-[#FFF5E6] dark:bg-gray-800 text-[#333333] dark:text-[#FAD961] focus:outline-none focus:ring-2 focus:ring-[#966F2E] transition"
               />
-              <div className="absolute hover:scale-110 top-58 right-12 -translate-y-1/2 text-[#966F2E] dark:text-[#FAD961] cursor-pointer ">
-                {isNoteGenerating ? (
-                  <Loader className="h-5 w-5 animate-spin" aria-hidden="true" />
-                ) : (
-                  <Sparkles
-                    className="w-5 h-5 drop-shadow-[0_0_6px_#FAD961]"
-                    onClick={handleNoteGeneration}
-                  />
-                )}
-              </div>
             </div>
 
             <button
-              disabled={loading || isNoteGenerating}
+              disabled={loading}
               type="submit"
               className={`
     relative flex items-center justify-center gap-2 w-full cursor-pointer
@@ -145,13 +131,8 @@ const GroupTwo = () => {
             className="w-full max-w-xl bg-[#FFF5E6]/80 dark:bg-gray-900/80 backdrop-blur-md p-8 rounded-2xl shadow-xl text-center border border-[#C59B3E]"
           >
             <h2 className="text-2xl font-bold text-[#7A551E] dark:text-[#FAD961]">
-              Thank you for sending your message to{" "}
-              <span className="text-[#E63946]">Ibrahim!</span>
+              Content has been submitted successfully and will be appearing soon
             </h2>
-
-            <p className="mt-2 text-gray-600 dark:text-gray-300">
-              It will be reviewed and approved soon.
-            </p>
             <button
               onClick={() => setSubmitted(false)}
               className="cursor-pointer mt-6 bg-gradient-to-r from-[#966F2E] to-[#C59B3E] text-[#FFF5E6] px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition shadow-md hover:shadow-lg"
