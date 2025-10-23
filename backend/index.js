@@ -10,10 +10,11 @@ const app = express();
 //for cross origin resource sharing
 app.use(
   cors({
-    origin: "http://localhost:5173",
-    //  process.env.NODE_ENV === "development"
-    //    ? "http://localhost:5173" // dev
-    //    : "https://contank.netlify.app", // prod
+    //"http://localhost:5173",
+    origin:
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:5173" // dev
+        : "https://contank.netlify.app", // prod
     credentials: true,
   })
 );
