@@ -86,7 +86,7 @@ const Navbar = () => {
                 onClick={() => setOpenDropdown(!openDropdown)}
               />
               {openDropdown && (
-                <div className="absolute right-0 mt-2 w-48 bg-gray-950 border border-gray-700 rounded-lg shadow-lg p-4">
+                <div className="absolute -right-10/12 mt-2 w-60 bg-gray-950 border border-gray-700 rounded-lg shadow-lg p-4">
                   <p className="text-gray-200 font-semibold">👋 Welcome</p>
                   <p className="text-gray-400 text-sm ml-2">{user?.email}</p>
                   <hr className="my-2 border-gray-700" />
@@ -104,7 +104,7 @@ const Navbar = () => {
                       handleLogout();
                       setOpenDropdown(false);
                     }}
-                    className="w-full text-left text-sm text-red-400 hover:bg-gray-800 px-2 py-1 rounded"
+                    className="cursor-pointer w-full text-left text-sm text-red-400 hover:bg-gray-800 px-2 py-1 rounded"
                   >
                     Logout ➙
                   </button>
