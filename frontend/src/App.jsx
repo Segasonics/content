@@ -16,7 +16,7 @@ import ContentTwo from "./pages/Contents2/ContentTwo";
 import NavbarSkeleton from "./components/skeletons/NavbarSkeleton";
 
 function App() {
-  const { user, loading } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const location = useLocation();
 
