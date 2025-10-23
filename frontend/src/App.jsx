@@ -22,10 +22,11 @@ function App() {
 
   const hideNavbar = [`/content/group2`, "/content/group1"];
   useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (user) {
-      dispatch(setUser(JSON.parse(user)));
-    }
+    // const user = localStorage.getItem("user");
+    // if (user) {
+    //   dispatch(setUser(JSON.parse(user)));
+    // }
+    dispatch(authUser());
   }, [dispatch]);
   console.log(user);
   //hide navbaron specific routes
@@ -33,7 +34,7 @@ function App() {
 
   return (
     <>
-      {shouldShowNavbar && (loading ? <NavbarSkeleton /> : <Navbar />)}
+      {shouldShowNavbar && <Navbar />}
 
       <Routes>
         <Route path="/" element={<Home />} />

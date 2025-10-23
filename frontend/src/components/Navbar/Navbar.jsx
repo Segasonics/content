@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { logoutUser } from "../../features/AuthDataSlice/AuthDataSlice";
+import { logout } from "../../features/AuthDataSlice/AuthDataSlice";
 import userprofile from "../../assets/userprofile.jpg";
 
 const Navbar = () => {
@@ -25,7 +25,7 @@ const Navbar = () => {
   }, []);
 
   const handleLogout = () => {
-    dispatch(logoutUser());
+    dispatch(logout());
     navigate("/login");
   };
 
