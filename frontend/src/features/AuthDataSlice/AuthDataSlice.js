@@ -15,7 +15,7 @@ export const login = createAsyncThunk(
       console.log(data.data);
       return data.data.user;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error.response?.data || error.message);
     }
   }
 );
@@ -101,6 +101,10 @@ const authDataSlice = createSlice({
     logoutUser: (state) => {
       state.user = null;
     },
+    resetLoading: (state) => {
+      state.loading = false;
+      state.error = null;
+    },
   },
   //each thunk has three states pending fulffiled and rjected
   extraReducers: (builder) => {
@@ -160,17 +164,17 @@ const authDataSlice = createSlice({
       })
       //refreshtoken
       .addCase(refresh.pending, (state) => {
-        state.status = "loading";
+        state.loading = false;
       })
       .addCase(refresh.fulfilled, (state, action) => {
-        state.status = "succeeded";
+        state.loading = false;
         state.accessToken = action.payload.data.accessToken; // your backend sends it
       })
       .addCase(refresh.rejected, (state, action) => {
-        state.status = "failed";
+        state.loading = false;
         state.error = action.payload;
       });
   },
 });
-export const { logoutUser, setUser } = authDataSlice.actions;
+export const { logoutUser, setUser, resetLoading } = authDataSlice.actions;
 export default authDataSlice.reducer;

@@ -8,7 +8,7 @@ export const axiosInstance = axios.create({
   withCredentials: true, // important for cookies
 });
 
-// ✅ Response interceptor for refresh token
+// Response interceptor for refresh token
 let isRefreshing = false;
 let failedQueue = [];
 
@@ -21,14 +21,20 @@ const processQueue = (error) => {
 };
 
 axiosInstance.interceptors.response.use(
-  (response) => response, // pass successful responses
+  (response) => response,
   async (error) => {
     const originalRequest = error.config;
+    if (
+      originalRequest.url.includes("/users/login") ||
+      originalRequest.url.includes("/users/register") ||
+      originalRequest.url.includes("/notes/fetchallnote/:group") ||
+      originalRequest.url.includes("/notes/fetchallnotes")
+    ) {
+      return Promise.reject(error);
+    }
 
-    // If 401 and not already retried
     if (error.response?.status === 401 && !originalRequest._retry) {
       if (isRefreshing) {
-        // Queue the request while refreshing
         return new Promise((resolve, reject) => {
           failedQueue.push({ resolve, reject });
         }).then(() => axiosInstance(originalRequest));
@@ -38,13 +44,11 @@ axiosInstance.interceptors.response.use(
       isRefreshing = true;
 
       try {
-        // Call refresh token endpoint
         await axiosInstance.get("/users/refresh");
         processQueue(null);
-        return axiosInstance(originalRequest); // retry original request
+        return axiosInstance(originalRequest);
       } catch (refreshError) {
         processQueue(refreshError);
-        // Optional: redirect to login
         window.location.href = "/login";
         return Promise.reject(refreshError);
       } finally {
