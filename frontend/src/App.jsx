@@ -29,6 +29,7 @@ function App() {
     dispatch(authUser());
   }, [dispatch]);
   console.log(user);
+
   //hide navbaron specific routes
   const shouldShowNavbar = !hideNavbar.includes(location.pathname);
 
