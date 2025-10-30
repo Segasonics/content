@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import { Loader, Sparkles } from "lucide-react";
+
 const GroupOne = () => {
   const [content, setContent] = useState("");
   const [submitted, setSubmitted] = useState(false);
@@ -85,16 +86,16 @@ const GroupOne = () => {
             className="w-full max-w-xl bg-white/90 dark:bg-gray-900/90 backdrop-blur-md p-8 rounded-2xl shadow-xl space-y-6 border border-gray-200 dark:border-gray-700"
           >
             <h2 className="text-3xl font-extrabold text-center text-[#B22222] tracking-tight">
-              Ayesha
+              Send a message for Ayesha
             </h2>
             <div>
-              <label className="block mb-1 text-lg font-medium text-[#4A90E2] dark:text-[#A3D977]">
+              {/* <label className="block mb-1 text-lg font-medium text-[#4A90E2] dark:text-[#A3D977]">
                 Content
-              </label>
+              </label> */}
               <textarea
                 value={content}
                 onChange={handleChange}
-                placeholder="Write your note here..."
+                placeholder="Write your message here..."
                 rows={5}
                 className="w-full border border-[#A3D977] rounded-lg p-3 bg-gray-50 dark:bg-gray-800 text-[#333333] dark:text-[#DCEFF5] focus:outline-none focus:ring-2 focus:ring-[#4A90E2] transition"
               />
@@ -123,17 +124,20 @@ const GroupOne = () => {
             </button>
           </form>
         ) : (
-          <div className="w-full max-w-xl bg-white/90 dark:bg-gray-900/90 backdrop-blur-md p-8 rounded-2xl shadow-xl text-center border border-gray-200 dark:border-gray-700">
-            <h2 className="text-2xl font-bold text-[#4A90E2] dark:text-[#A3D977]">
-              Content has been submitted successfully and will be appearing soon
-            </h2>
-            <button
-              onClick={() => setSubmitted(false)}
-              className="cursor-pointer mt-6 bg-gradient-to-r from-[#B22222] to-[#C53030] text-[#DCEFF5] px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition shadow-md hover:shadow-lg"
-            >
-              Add Another Note
-            </button>
-          </div>
+          <>
+            <div className="w-full max-w-xl bg-white/90 dark:bg-gray-900/90 backdrop-blur-md p-8 rounded-2xl shadow-xl text-center border border-gray-200 dark:border-gray-700">
+              <h2 className="text-2xl font-bold text-[#4A90E2] dark:text-[#A3D977]">
+                Your message has been successfully submitted and will appear
+                soon.
+              </h2>
+              <button
+                onClick={() => setSubmitted(false)}
+                className="cursor-pointer mt-6 bg-gradient-to-r from-[#B22222] to-[#C53030] text-[#DCEFF5] px-6 py-3 rounded-lg font-semibold hover:opacity-90 transition shadow-md hover:shadow-lg"
+              >
+                Add Another Message
+              </button>
+            </div>
+          </>
         )}
       </motion.div>
     </div>

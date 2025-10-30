@@ -85,17 +85,17 @@ const GroupTwo = () => {
             className="w-full max-w-xl bg-[#FFF5E6]/80 dark:bg-gray-900/80 backdrop-blur-md p-8 rounded-2xl shadow-xl space-y-6 border border-[#C59B3E]"
           >
             <h2 className="text-3xl font-extrabold text-center text-[#966F2E] tracking-tight">
-              Ibrahim
+              Send a message for Ibrahim
             </h2>
 
             <div>
-              <label className="block mb-1 text-lg font-medium text-[#7A551E] dark:text-[#FAD961]">
+              {/* <label className="block mb-1 text-lg font-medium text-[#7A551E] dark:text-[#FAD961]">
                 Content
-              </label>
+              </label> */}
               <textarea
                 value={content}
                 onChange={handleChange}
-                placeholder="Write your note here..."
+                placeholder="Write your message here..."
                 rows={5}
                 className="w-full border border-[#D4B382] rounded-lg p-3 bg-[#FFF5E6] dark:bg-gray-800 text-[#333333] dark:text-[#FAD961] focus:outline-none focus:ring-2 focus:ring-[#966F2E] transition"
               />
@@ -131,7 +131,7 @@ const GroupTwo = () => {
             className="w-full max-w-xl bg-[#FFF5E6]/80 dark:bg-gray-900/80 backdrop-blur-md p-8 rounded-2xl shadow-xl text-center border border-[#C59B3E]"
           >
             <h2 className="text-2xl font-bold text-[#7A551E] dark:text-[#FAD961]">
-              Content has been submitted successfully and will be appearing soon
+              Your message has been successfully submitted and will appear soon.
             </h2>
             <button
               onClick={() => setSubmitted(false)}

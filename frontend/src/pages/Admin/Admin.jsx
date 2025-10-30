@@ -12,9 +12,14 @@ import AdminPanelSkeleton from "../../components/skeletons/AdminPanelSkeleton";
 import { Link } from "react-router-dom";
 
 const Admin = () => {
-  const { contents, pendingContent, loading, isDeleting } = useSelector(
-    (state) => state.content
-  );
+  const {
+    contents,
+    pendingContent,
+    loading,
+    isDeleting,
+    isApproving,
+    isRejecting,
+  } = useSelector((state) => state.content);
   console.log(contents);
   console.log(pendingContent);
   const dispatch = useDispatch();
@@ -44,7 +49,7 @@ const Admin = () => {
 
   return (
     <>
-      {loading || isDeleting ? (
+      {loading ? (
         <AdminPanelSkeleton />
       ) : (
         <div className="min-h-screen bg-gray-100 p-8 pt-18">
@@ -106,23 +111,25 @@ const Admin = () => {
 
                   <div className="flex gap-2">
                     <button
+                      disabled={isApproving}
                       onClick={() => handleApprove(item._id)}
                       className="px-3 py-1 text-sm bg-green-600 text-white rounded hover:bg-green-700 cursor-pointer"
                     >
-                      {loading ? "Approving..." : "Approve"}
+                      {isApproving ? "Approving..." : "Approve"}
                     </button>
                     <button
-                      disabled={loading}
+                      disabled={isRejecting}
                       onClick={() => handleReject(item._id)}
                       className="px-3 py-1 text-sm bg-red-600 text-white rounded hover:bg-red-700 cursor-pointer"
                     >
-                      Reject
+                      {isRejecting ? "Rejecting..." : "Reject"}
                     </button>
                     <button
+                      disabled={isDeleting}
                       onClick={() => handleDelete(item._id)}
                       className="px-3 py-1 text-sm bg-red-500 text-white rounded hover:bg-red-600 cursor-pointer"
                     >
-                      Delete
+                      {isDeleting ? "Deleting..." : "Delete"}
                     </button>
                   </div>
                 </div>

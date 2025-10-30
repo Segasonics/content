@@ -11,9 +11,15 @@ const Contents = () => {
   const { contents, loading } = useSelector((state) => state.content);
   const location = useLocation();
   const group = location.pathname.split("/")[2];
+
   useEffect(() => {
     //dispatching fetchallnote to get all approved content
     dispatch(fetchallNoteByGroup(group));
+    const interval = setInterval(() => {
+      dispatch(fetchallNoteByGroup(group));
+    }, 2 * 60 * 1000);
+
+    return () => clearInterval(interval);
   }, [dispatch, group]);
 
   const controls = useAnimation();

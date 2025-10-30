@@ -8,10 +8,15 @@ export const createNote = createAsyncThunk(
   "note/create",
   async ({ content, group }, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.post("/notes/createnote", { content, group });
+      const { data } = await axiosInstance.post("/notes/createnote", {
+        content,
+        group,
+      });
       return data.data.content;
     } catch (error) {
-      return rejectWithValue(error.response?.data || { message: "Something went wrong" });
+      return rejectWithValue(
+        error.response?.data || { message: "Something went wrong" }
+      );
     }
   }
 );
@@ -24,7 +29,9 @@ export const fetchallNote = createAsyncThunk(
       const { data } = await axiosInstance.get("/notes/fetchallnotes");
       return data.data.content;
     } catch (error) {
-      return rejectWithValue(error.response?.data || { message: "Something went wrong" });
+      return rejectWithValue(
+        error.response?.data || { message: "Something went wrong" }
+      );
     }
   }
 );
@@ -37,7 +44,9 @@ export const fetchallNoteByGroup = createAsyncThunk(
       const { data } = await axiosInstance.get(`/notes/fetchallnote/${group}`);
       return data.data.content;
     } catch (error) {
-      return rejectWithValue(error.response?.data || { message: "Something went wrong" });
+      return rejectWithValue(
+        error.response?.data || { message: "Something went wrong" }
+      );
     }
   }
 );
@@ -50,7 +59,9 @@ export const approveNote = createAsyncThunk(
       const { data } = await axiosInstance.put(`/notes/approve/${id}`);
       return data.data.content;
     } catch (error) {
-      return rejectWithValue(error.response?.data || { message: "Something went wrong" });
+      return rejectWithValue(
+        error.response?.data || { message: "Something went wrong" }
+      );
     }
   }
 );
@@ -63,7 +74,9 @@ export const pendingNote = createAsyncThunk(
       const { data } = await axiosInstance.get("/notes/pending-notes");
       return data.data.content;
     } catch (error) {
-      return rejectWithValue(error.response?.data || { message: "Something went wrong" });
+      return rejectWithValue(
+        error.response?.data || { message: "Something went wrong" }
+      );
     }
   }
 );
@@ -76,7 +89,9 @@ export const deleteNote = createAsyncThunk(
       await axiosInstance.delete(`/notes/delete-note/${id}`);
       return id; // returning id to remove it from state
     } catch (error) {
-      return rejectWithValue(error.response?.data || { message: "Something went wrong" });
+      return rejectWithValue(
+        error.response?.data || { message: "Something went wrong" }
+      );
     }
   }
 );
@@ -89,7 +104,9 @@ export const rejectNote = createAsyncThunk(
       const { data } = await axiosInstance.put(`/notes/reject/${id}`);
       return data.data.content;
     } catch (error) {
-      return rejectWithValue(error.response?.data || { message: "Something went wrong" });
+      return rejectWithValue(
+        error.response?.data || { message: "Something went wrong" }
+      );
     }
   }
 );
@@ -97,15 +114,17 @@ export const rejectNote = createAsyncThunk(
 //generate a note
 export const generateContent = createAsyncThunk(
   "note/generate",
-  async ( {title} , { rejectWithValue }) => {
+  async ({ title }, { rejectWithValue }) => {
     try {
-      const { data } = await axiosInstance.post("/notes/generate",  {title} );
+      const { data } = await axiosInstance.post("/notes/generate", { title });
       return data.data.content;
     } catch (error) {
-      return rejectWithValue(error.response?.data || { message: "Something went wrong" });
+      return rejectWithValue(
+        error.response?.data || { message: "Something went wrong" }
+      );
     }
   }
-)
+);
 // ------------------------ Slice ------------------------ //
 
 const ContentDataSlice = createSlice({
@@ -117,6 +136,8 @@ const ContentDataSlice = createSlice({
     isNoteGenerating: false,
     isDeleting: false,
     error: null,
+    isApproving: false,
+    isRejecting: false,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -162,14 +183,23 @@ const ContentDataSlice = createSlice({
       .addCase(fetchallNoteByGroup.rejected, (state, action) => {
         state.loading = false;
         state.contents = []; // ensure empty on error
-        state.error = action.payload?.message || "Failed to fetch notes by group";
+        state.error =
+          action.payload?.message || "Failed to fetch notes by group";
       })
 
       // Approve note
+      .addCase(approveNote.pending, (state) => {
+        state.isApproving = true;
+        state.error = null;
+      })
       .addCase(approveNote.fulfilled, (state, action) => {
         state.contents.push(action.payload);
+        state.isApproving = false;
       })
-
+      .addCase(approveNote.rejected, (state, action) => {
+        state.isApproving = false;
+        state.error = action.payload?.message || "Failed to approve note";
+      })
       // Fetch pending notes
       .addCase(pendingNote.pending, (state) => {
         state.loading = true;
@@ -181,7 +211,8 @@ const ContentDataSlice = createSlice({
       })
       .addCase(pendingNote.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload?.message || "Failed to fetch pending notes";
+        state.error =
+          action.payload?.message || "Failed to fetch pending notes";
       })
 
       // Delete note
@@ -193,16 +224,31 @@ const ContentDataSlice = createSlice({
         state.isDeleting = false;
         const id = action.payload;
         state.contents = state.contents.filter((note) => note._id !== id);
-        state.pendingContent = state.pendingContent.filter((note) => note._id !== id);
+        state.pendingContent = state.pendingContent.filter(
+          (note) => note._id !== id
+        );
       })
       .addCase(deleteNote.rejected, (state, action) => {
         state.isDeleting = false;
         state.error = action.payload?.message || "Failed to delete note";
       })
       // Reject note
+      .addCase(rejectNote.pending, (state) => {
+        state.isRejecting = true;
+        state.error = null;
+      })
       .addCase(rejectNote.fulfilled, (state, action) => {
-        state.contents = state.contents.filter((note) => note._id !== action.payload._id);
-        state.pendingContent = state.pendingContent.filter((note) => note._id !== action.payload._id);
+        state.isRejecting = false;
+        state.contents = state.contents.filter(
+          (note) => note._id !== action.payload._id
+        );
+        state.pendingContent = state.pendingContent.filter(
+          (note) => note._id !== action.payload._id
+        );
+      })
+      .addCase(rejectNote.rejected, (state, action) => {
+        state.isRejecting = false;
+        state.error = action.payload?.message || "Failed to reject note";
       })
       //generate Note
       .addCase(generateContent.pending, (state) => {
@@ -216,7 +262,7 @@ const ContentDataSlice = createSlice({
       .addCase(generateContent.rejected, (state, action) => {
         state.isNoteGenerating = false;
         state.error = action.payload?.message || "Failed to generate note";
-      })
+      });
   },
 });
 
