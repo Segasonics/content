@@ -1,4 +1,4 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, isPending } from "@reduxjs/toolkit";
 import { axiosInstance } from "../../lib/axiosInstance";
 
 // ------------------------ Async Thunks ------------------------ //
@@ -138,6 +138,7 @@ const ContentDataSlice = createSlice({
     error: null,
     isApproving: false,
     isRejecting: false,
+    isPending: false,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -202,15 +203,15 @@ const ContentDataSlice = createSlice({
       })
       // Fetch pending notes
       .addCase(pendingNote.pending, (state) => {
-        state.loading = true;
+        state.isPending = true;
         state.error = null;
       })
       .addCase(pendingNote.fulfilled, (state, action) => {
-        state.loading = false;
+        state.isPending = false;
         state.pendingContent = action.payload;
       })
       .addCase(pendingNote.rejected, (state, action) => {
-        state.loading = false;
+        state.isPending = false;
         state.error =
           action.payload?.message || "Failed to fetch pending notes";
       })

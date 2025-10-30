@@ -10,6 +10,7 @@ import {
 import { motion } from "framer-motion";
 import AdminPanelSkeleton from "../../components/skeletons/AdminPanelSkeleton";
 import { Link } from "react-router-dom";
+import ApprovedContentSkeleton from "../../components/skeletons/ApprovedContentSkeleton";
 
 const Admin = () => {
   const {
@@ -19,6 +20,7 @@ const Admin = () => {
     isDeleting,
     isApproving,
     isRejecting,
+    isPending,
   } = useSelector((state) => state.content);
   console.log(contents);
   console.log(pendingContent);
@@ -49,32 +51,32 @@ const Admin = () => {
 
   return (
     <>
-      {loading ? (
-        <AdminPanelSkeleton />
-      ) : (
-        <div className="min-h-screen bg-gray-100 p-8 pt-18">
-          <h1 className="text-3xl font-bold text-center mb-6">Admin Panel</h1>
+      <div className="min-h-screen bg-gray-100 p-8 pt-18">
+        <h1 className="text-3xl font-bold text-center mb-6">Admin Panel</h1>
 
-          {/* Pending / Rejected */}
-          <section className="max-w-2xl mx-auto">
-            <div className="flex items-center justify-end gap-3">
-              <Link
-                to="/group1/add"
-                className="px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-800 transition"
-              >
-                + Ayesha
-              </Link>
-              <Link
-                to="/group2/add"
-                className="px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-800 transition"
-              >
-                + Ibrahim
-              </Link>
-            </div>
+        {/* Pending / Rejected */}
+        <section className="max-w-2xl mx-auto">
+          <div className="flex items-center justify-end gap-3">
+            <Link
+              to="/group1/add"
+              className="px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-800 transition"
+            >
+              + Ayesha
+            </Link>
+            <Link
+              to="/group2/add"
+              className="px-4 py-2 bg-gray-900 text-white text-sm font-medium rounded-lg shadow hover:bg-gray-800 transition"
+            >
+              + Ibrahim
+            </Link>
+          </div>
 
-            <h2 className="text-xl font-semibold mb-4">
-              Pending / Rejected Content
-            </h2>
+          <h2 className="text-xl font-semibold mb-4">
+            Pending / Rejected Content
+          </h2>
+          {isPending ? (
+            <AdminPanelSkeleton />
+          ) : (
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }} // smoothly move into place
@@ -135,11 +137,15 @@ const Admin = () => {
                 </div>
               ))}
             </motion.div>
-          </section>
+          )}
+        </section>
 
-          {/* Approved Content */}
-          <section className="max-w-2xl mx-auto mt-10">
-            <h2 className="text-xl font-semibold mb-4">Approved Content</h2>
+        {/* Approved Content */}
+        <section className="max-w-2xl mx-auto mt-10">
+          <h2 className="text-xl font-semibold mb-4">Approved Content</h2>
+          {loading ? (
+            <ApprovedContentSkeleton />
+          ) : (
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
@@ -184,9 +190,9 @@ const Admin = () => {
                 </div>
               ))}
             </motion.div>
-          </section>
-        </div>
-      )}
+          )}
+        </section>
+      </div>
     </>
   );
 };

@@ -28,7 +28,7 @@ const GroupOne = () => {
     setContent("");
 
     if (createNote.fulfilled.match(result)) {
-      toast.success(result.payload.message || "Content created");
+      toast.success(result.payload.message || "Message sent to Ayesha");
       setSubmitted(true); // show success message
     } else {
       toast.error(result.payload.message || "Error while creating the note");
