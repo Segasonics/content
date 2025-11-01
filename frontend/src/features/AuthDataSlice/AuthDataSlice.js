@@ -12,6 +12,7 @@ export const login = createAsyncThunk(
         password,
       });
       //localStorage.setItem("user", JSON.stringify(data.data.user));
+      localStorage.setItem("token", data.data.user.refreshToken);
       console.log(data.data);
       return data.data.user;
     } catch (error) {

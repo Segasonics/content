@@ -124,7 +124,7 @@ const Contents = () => {
 
             {contents?.length === 0 ? (
               <h1 className="text-lg md:text-xl lg:text-2xl text-[#2C3E50] dark:text-[#DCEFF5] font-medium text-center">
-                No content !! Start adding some
+                No messages !! Start sending some
               </h1>
             ) : (
               <motion.div

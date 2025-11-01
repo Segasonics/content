@@ -89,7 +89,7 @@ const ContentTwo = () => {
 
             {contents?.length === 0 ? (
               <h1 className="text-lg md:text-xl lg:text-2xl text-[#4D2C14] font-medium text-center">
-                No scrolls discovered! Begin to carve them...
+                No messages discovered! Start sending some...
               </h1>
             ) : (
               <motion.div

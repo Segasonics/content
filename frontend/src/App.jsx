@@ -22,11 +22,10 @@ function App() {
 
   const hideNavbar = [`/content/group2`, "/content/group1"];
   useEffect(() => {
-    // const user = localStorage.getItem("user");
-    // if (user) {
-    //   dispatch(setUser(JSON.parse(user)));
-    // }
-    dispatch(authUser());
+    const token = localStorage.getItem("token");
+    if (token) {
+      dispatch(authUser());
+    }
   }, [dispatch]);
   console.log(user);
 

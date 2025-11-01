@@ -96,9 +96,7 @@ export const loginUser = asyncHandler(async (req, res) => {
 
   await user.save({ validateBeforeSave: false });
 
-  const loggedInUser = await User.findById(user._id).select(
-    "-password -refreshToken"
-  );
+  const loggedInUser = await User.findById(user._id).select("-password");
 
   return res
     .status(200)
