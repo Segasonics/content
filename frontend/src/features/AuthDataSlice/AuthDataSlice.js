@@ -150,7 +150,7 @@ const authDataSlice = createSlice({
       })
       //authuser
       .addCase(authUser.pending, (state, action) => {
-        state.loading = false;
+        state.loading = true;
         state.error = null;
       })
       .addCase(authUser.fulfilled, (state, action) => {
@@ -160,12 +160,12 @@ const authDataSlice = createSlice({
       })
       .addCase(authUser.rejected, (state, action) => {
         state.loading = false;
-        state.user = null;
+        state.user = false;
         state.error = action.payload;
       })
       //refreshtoken
       .addCase(refresh.pending, (state) => {
-        state.loading = false;
+        state.loading = true;
       })
       .addCase(refresh.fulfilled, (state, action) => {
         state.loading = false;
