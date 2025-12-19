@@ -39,7 +39,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/group1/add" element={<GroupOne />} />
         <Route path="/group2/add" element={<GroupTwo />} />
-        <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
+        <Route path="/login" element={<Login />} />
         <Route
           path="/admin"
           element={
