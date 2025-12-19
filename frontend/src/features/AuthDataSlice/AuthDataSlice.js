@@ -166,7 +166,7 @@ const authDataSlice = createSlice({
       })
       //refreshtoken
       .addCase(refresh.pending, (state) => {
-        state.loading = true;
+        state.loading = false;
       })
       .addCase(refresh.fulfilled, (state, action) => {
         state.loading = false;
