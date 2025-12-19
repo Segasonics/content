@@ -43,7 +43,13 @@ function App() {
         <Route path="/login" element={user ? <Navigate to="/" /> : <Login />} />
         <Route
           path="/admin"
-          element={user?.role !== "admin" ? <Navigate to={"/"} /> : <Admin />}
+          element={
+            !user ? null : user.role !== "admin" ? (
+              <Navigate to="/" />
+            ) : (
+              <Admin />
+            )
+          }
         />
         <Route path="/content/group1" element={<Contents />} />
         <Route path="/content/group2" element={<ContentTwo />} />
