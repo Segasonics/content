@@ -91,6 +91,7 @@ const authDataSlice = createSlice({
   name: "users",
   initialState: {
     user: null,
+    userLoading: false,
     loading: false,
     error: null,
     accessToken: null,
@@ -150,11 +151,11 @@ const authDataSlice = createSlice({
       })
       //authuser
       .addCase(authUser.pending, (state, action) => {
-        state.loading = true;
+        state.userLoading = true;
         state.error = null;
       })
       .addCase(authUser.fulfilled, (state, action) => {
-        state.loading = false;
+        state.userLoading = false;
         state.user = action.payload;
         state.error = null;
       })
