@@ -23,10 +23,10 @@ function App() {
   const hideNavbar = [`/content/group2`, "/content/group1"];
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (token) {
+    if (token && !user) {
       dispatch(authUser());
     }
-  }, [dispatch]);
+  }, [dispatch, user]);
   console.log(user);
 
   //hide navbaron specific routes
