@@ -13,7 +13,6 @@ import ResetPassword from "./pages/ResetPassword/ResetPassword";
 import GroupOne from "./pages/Group1/GroupOne";
 import GroupTwo from "./pages/Group2/GroupTwo";
 import ContentTwo from "./pages/Contents2/ContentTwo";
-import NavbarSkeleton from "./components/skeletons/NavbarSkeleton";
 
 function App() {
   const { user } = useSelector((state) => state.auth);

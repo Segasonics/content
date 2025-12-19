@@ -165,9 +165,6 @@ const authDataSlice = createSlice({
         state.error = action.payload;
       })
       //refreshtoken
-      .addCase(refresh.pending, (state) => {
-        state.loading = false;
-      })
       .addCase(refresh.fulfilled, (state, action) => {
         state.loading = false;
         state.accessToken = action.payload.data.accessToken; // your backend sends it
