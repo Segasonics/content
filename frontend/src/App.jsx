@@ -52,10 +52,7 @@ function App() {
         />
         <Route path="/content/group1" element={<Contents />} />
         <Route path="/content/group2" element={<ContentTwo />} />
-        <Route
-          path="/reset-password"
-          element={user ? <ResetPassword /> : <Navigate to="/login" />}
-        />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Routes>
       <Toaster />
     </>
